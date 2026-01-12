@@ -1,10 +1,7 @@
-import React, { useState, useEffect, createContext, useContext, Suspense, lazy } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-
-// Lazy load 3D components for better performance
-const Scene3D = lazy(() => import('./components/Scene3D'));
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -13,6 +10,25 @@ const API = `${BACKEND_URL}/api`;
 const AuthContext = createContext(null);
 
 const useAuth = () => useContext(AuthContext);
+
+// Simple 3D Particle Background Component (CSS-based)
+const ParticleBackground = () => {
+  return (
+    <div className="particle-container">
+      {[...Array(50)].map((_, i) => (
+        <div 
+          key={i} 
+          className="particle"
+          style={{
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${3 + Math.random() * 4}s`
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 // API Helper
 const api = axios.create({
