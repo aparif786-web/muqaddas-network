@@ -223,7 +223,11 @@ async def create_donation(donation_data: DonationCreate, current_user: dict = De
 
 @api_router.get("/donations", response_model=List[Donation])
 async def get_donations(current_user: dict = Depends(get_current_user)):
-    donations = await db.donations.find({"user_id": current_user['id']}, {"_id": 0}).to_list(1000)
+    # Optimized: limit to 50 recent donations with sorting
+    donations = await db.donations.find(
+        {"user_id": current_user['id']}, 
+        {"_id": 0}
+    ).sort("created_at", -1).limit(50).to_list(50)
     return donations
 
 @api_router.get("/donations/all", response_model=List[Donation])
