@@ -138,7 +138,6 @@ const LandingPage = () => {
               <span className="stat-value stat-glow">{stats?.total_donors || "0"}</span>
               <span className="stat-label">Total Donors</span>
             </div>
-            </div>
           </div>
         </div>
       </section>
