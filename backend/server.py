@@ -249,15 +249,32 @@ async def confirm_donation(donation_id: str, current_user: dict = Depends(get_cu
 
 @api_router.get("/stats", response_model=FundStats)
 async def get_fund_stats():
-    # Get all confirmed donations
-    donations = await db.donations.find({"status": "confirmed"}, {"_id": 0}).to_list(10000)
+    # Optimized: Use MongoDB aggregation pipeline
+    pipeline = [
+        {"$match": {"status": "confirmed"}},
+        {"$group": {
+            "_id": None,
+            "total_amount": {"$sum": "$amount"},
+            "count": {"$sum": 1},
+            "unique_donors": {"$addToSet": "$donor_name"}
+        }}
+    ]
     
-    total_donations = sum(d.get('amount', 0) for d in donations)
-    charity_fund = len(donations) * 5.0  # ₹5 per donation
+    result = await db.donations.aggregate(pipeline).to_list(1)
+    
+    if result:
+        data = result[0]
+        total_donations = data.get('total_amount', 0)
+        total_transactions = data.get('count', 0)
+        total_donors = len(data.get('unique_donors', []))
+    else:
+        total_donations = 0
+        total_transactions = 0
+        total_donors = 0
+    
+    charity_fund = total_transactions * 5.0  # ₹5 per donation
     vip_income = total_donations * 0.02  # 2% VIP gift income
     family_equity = total_donations * 0.60  # 60% family lock
-    
-    total_donors = len(set(d.get('donor_name', '') for d in donations))
     
     return FundStats(
         total_donations=total_donations,
@@ -265,21 +282,41 @@ async def get_fund_stats():
         vip_income=vip_income,
         family_equity=family_equity,
         total_donors=total_donors,
-        total_transactions=len(donations)
+        total_transactions=total_transactions
     )
 
 @api_router.get("/stats/public")
 async def get_public_stats():
-    donations = await db.donations.find({"status": "confirmed"}, {"_id": 0}).to_list(10000)
+    # Optimized: Use MongoDB aggregation pipeline
+    pipeline = [
+        {"$match": {"status": "confirmed"}},
+        {"$group": {
+            "_id": None,
+            "total_amount": {"$sum": "$amount"},
+            "count": {"$sum": 1},
+            "unique_donors": {"$addToSet": "$donor_name"}
+        }}
+    ]
     
-    total_donations = sum(d.get('amount', 0) for d in donations)
-    charity_fund = len(donations) * 5.0
+    result = await db.donations.aggregate(pipeline).to_list(1)
+    
+    if result:
+        data = result[0]
+        total_donations = data.get('total_amount', 0)
+        total_transactions = data.get('count', 0)
+        total_donors = len(data.get('unique_donors', []))
+    else:
+        total_donations = 0
+        total_transactions = 0
+        total_donors = 0
+    
+    charity_fund = total_transactions * 5.0
     
     return {
         "total_donations": total_donations,
         "charity_fund": charity_fund,
-        "total_donors": len(set(d.get('donor_name', '') for d in donations)),
-        "total_transactions": len(donations),
+        "total_donors": total_donors,
+        "total_transactions": total_transactions,
         "family_equity_percent": 60,
         "vip_income_percent": 2
     }
