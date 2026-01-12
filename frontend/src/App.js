@@ -72,13 +72,18 @@ const Navbar = () => {
 // Landing Page
 const LandingPage = () => {
   const [stats, setStats] = useState(null);
+  const [platformFees, setPlatformFees] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await api.get("/stats/public");
-        setStats(response.data);
+        const [statsRes, feesRes] = await Promise.all([
+          api.get("/stats/public"),
+          api.get("/platform-fees")
+        ]);
+        setStats(statsRes.data);
+        setPlatformFees(feesRes.data);
       } catch (error) {
         console.error("Error fetching stats:", error);
       }
@@ -88,45 +93,51 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page" data-testid="landing-page">
+      {/* 3D Background Scene */}
+      <Suspense fallback={null}>
+        <Scene3D type="hero" />
+      </Suspense>
+      
       {/* Hero Section */}
-      <section className="hero-section">
+      <section className="hero-section hero-3d">
         <div className="hero-content">
-          <div className="hero-badge">🏆 Guinness World Record Goal</div>
-          <h1 className="hero-title">
-            <span className="title-green">Muqaddas</span> Network
+          <div className="hero-badge animate-float">🏆 Guinness World Record Goal</div>
+          <h1 className="hero-title hero-title-3d">
+            <span className="title-green glow-text">Muqaddas</span> Network
           </h1>
           <p className="hero-subtitle">
-            High-Tech Platform for Helping Cancer Patients & Poor People 💚
+            High-Tech 3D Platform for Helping Cancer Patients & Poor People 💚
           </p>
           <div className="hero-features">
-            <div className="feature-tag">🛡️ Zero-Tax Sovereign Shield</div>
-            <div className="feature-tag">🔒 60% Family Equity Lock</div>
-            <div className="feature-tag">💝 ₹5 Charity per Donation</div>
-            <div className="feature-tag">🎁 2% VIP Gift Income</div>
+            <div className="feature-tag feature-3d">🛡️ Zero-Tax Sovereign Shield</div>
+            <div className="feature-tag feature-3d">🔒 60% Family Equity Lock</div>
+            <div className="feature-tag feature-3d">💝 ₹15 Rule (₹10+₹5)</div>
+            <div className="feature-tag feature-3d">🎁 2% VIP Gift Income</div>
           </div>
           <div className="hero-buttons">
-            <button onClick={() => navigate("/register")} className="btn-primary" data-testid="get-started-btn">
+            <button onClick={() => navigate("/register")} className="btn-primary btn-3d-effect" data-testid="get-started-btn">
               Get Started 🚀
             </button>
-            <button onClick={() => navigate("/donate")} className="btn-secondary" data-testid="donate-now-btn">
+            <button onClick={() => navigate("/donate")} className="btn-secondary btn-3d-effect" data-testid="donate-now-btn">
               Donate Now 💚
             </button>
           </div>
         </div>
         <div className="hero-visual">
-          <div className="stats-card">
+          <div className="stats-card stats-card-3d">
             <h3>Live Impact</h3>
             <div className="stat-item">
-              <span className="stat-value">₹{stats?.total_donations?.toLocaleString() || "0"}</span>
+              <span className="stat-value stat-glow">₹{stats?.total_donations?.toLocaleString() || "0"}</span>
               <span className="stat-label">Total Donations</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">₹{stats?.charity_fund?.toLocaleString() || "0"}</span>
-              <span className="stat-label">Charity Fund</span>
+              <span className="stat-value stat-glow">₹{stats?.charity_fund?.toLocaleString() || "0"}</span>
+              <span className="stat-label">Charity Fund (₹5/donation)</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{stats?.total_donors || "0"}</span>
+              <span className="stat-value stat-glow">{stats?.total_donors || "0"}</span>
               <span className="stat-label">Total Donors</span>
+            </div>
             </div>
           </div>
         </div>
