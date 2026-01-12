@@ -217,13 +217,16 @@ async def get_me(current_user: dict = Depends(get_current_user)):
 
 @api_router.post("/donations", response_model=Donation)
 async def create_donation(donation_data: DonationCreate, current_user: dict = Depends(get_current_user)):
+    # ₹15 Rule: ₹10 maintenance + ₹5 charity (100% LOCKED)
     donation = Donation(
         amount=donation_data.amount,
         donor_name=donation_data.donor_name,
         donor_phone=donation_data.donor_phone,
         message=donation_data.message,
         user_id=current_user['id'],
-        charity_contribution=5.0  # ₹5 per donation goes to charity
+        maintenance_fee=10.0,  # ₹10 system maintenance
+        charity_contribution=5.0,  # ₹5 patient charity fund
+        total_platform_fee=15.0  # Total ₹15 per donation
     )
     
     donation_dict = donation.model_dump()
