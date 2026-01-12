@@ -1,11 +1,10 @@
-import { useState, useEffect, createContext, useContext, Suspense } from "react";
+import React, { useState, useEffect, createContext, useContext, Suspense, lazy } from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-// Lazy load 3D components
-const Scene3D = React.lazy(() => import('./components/Scene3D'));
-const { MiniScene3D } = await import('./components/Scene3D').catch(() => ({ MiniScene3D: () => null }));
+// Lazy load 3D components for better performance
+const Scene3D = lazy(() => import('./components/Scene3D'));
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
