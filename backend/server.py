@@ -11,7 +11,8 @@ from typing import List, Optional
 import uuid
 from datetime import datetime, timezone, timedelta
 import jwt
-from passlib.context import CryptContext
+import hashlib
+import secrets
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -26,8 +27,21 @@ JWT_SECRET = os.environ['JWT_SECRET']
 JWT_ALGORITHM = os.environ.get('JWT_ALGORITHM', 'HS256')
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.environ.get('ACCESS_TOKEN_EXPIRE_MINUTES', 1440))
 
-# Password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Password hashing using hashlib (compatible with all environments)
+def hash_password(password: str) -> str:
+    """Hash password using SHA-256 with salt"""
+    salt = secrets.token_hex(16)
+    pwd_hash = hashlib.sha256((password + salt).encode()).hexdigest()
+    return f"{salt}${pwd_hash}"
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verify password against hash"""
+    try:
+        salt, pwd_hash = hashed_password.split('$')
+        return hashlib.sha256((plain_password + salt).encode()).hexdigest() == pwd_hash
+    except:
+        return False
+
 security = HTTPBearer()
 
 # Create the main app
@@ -35,6 +49,12 @@ app = FastAPI(title="Muqaddas Network API", version="1.0.0")
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
+
+# ==================== ROOT LEVEL HEALTH CHECK (Required for Kubernetes) ====================
+@app.get("/health")
+async def root_health_check():
+    """Root level health check for Kubernetes"""
+    return {"status": "healthy", "service": "Muqaddas Network"}
 
 # ==================== MODELS ====================
 
