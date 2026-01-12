@@ -109,10 +109,8 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page" data-testid="landing-page">
-      {/* 3D Background Scene */}
-      <Suspense fallback={null}>
-        <Scene3D type="hero" />
-      </Suspense>
+      {/* 3D Particle Background */}
+      <ParticleBackground />
       
       {/* Hero Section */}
       <section className="hero-section hero-3d">
@@ -141,6 +139,7 @@ const LandingPage = () => {
         </div>
         <div className="hero-visual">
           <div className="stats-card stats-card-3d">
+            <div className="floating-icon">💚</div>
             <h3>Live Impact</h3>
             <div className="stat-item">
               <span className="stat-value stat-glow">₹{stats?.total_donations?.toLocaleString() || "0"}</span>
