@@ -350,6 +350,64 @@ async def get_family_equity_info():
         "lock_type": "PERMANENT"
     }
 
+# ==================== MASTER PASSWORD (FOUNDER ACCESS) ====================
+
+@api_router.post("/founder/verify")
+async def verify_master_password(data: MasterPasswordVerify):
+    """Verify Founder Master Password for admin access"""
+    if data.password == MASTER_PASSWORD:
+        return {
+            "status": "verified",
+            "message": "Founder access granted",
+            "founder": "Arif Ullah",
+            "permissions": ["full_admin", "equity_view", "charity_management"]
+        }
+    raise HTTPException(status_code=401, detail="Invalid Master Password")
+
+@api_router.get("/founder/earnings")
+async def get_founder_earnings():
+    """Get founder earnings and check ₹50,000 threshold"""
+    pipeline = [
+        {"$match": {"status": "confirmed"}},
+        {"$group": {
+            "_id": None,
+            "total_amount": {"$sum": "$amount"},
+            "total_maintenance": {"$sum": "$maintenance_fee"},
+            "total_charity": {"$sum": "$charity_contribution"}
+        }}
+    ]
+    
+    result = await db.donations.aggregate(pipeline).to_list(1)
+    
+    if result:
+        data = result[0]
+        total_earnings = data.get('total_maintenance', 0)
+        charity_redirect_active = total_earnings >= FOUNDER_EARNINGS_THRESHOLD
+    else:
+        total_earnings = 0
+        charity_redirect_active = False
+    
+    return {
+        "founder_earnings": total_earnings,
+        "threshold": FOUNDER_EARNINGS_THRESHOLD,
+        "charity_redirect_active": charity_redirect_active,
+        "message": "When founder earns ₹50,000, 100% of next revenue goes to charity" if not charity_redirect_active else "100% CHARITY REDIRECT ACTIVE!"
+    }
+
+# ==================== ₹15 RULE INFO ====================
+
+@api_router.get("/platform-fees")
+async def get_platform_fees():
+    """Get ₹15 Rule breakdown (₹10 + ₹5)"""
+    return {
+        "total_fee": 15,
+        "maintenance_fee": 10,
+        "charity_fee": 5,
+        "description": "₹15 Rule: ₹10 for system maintenance + ₹5 for patient charity fund",
+        "status": "100% LOCKED",
+        "founder": "Arif Ullah"
+    }
+
 # ==================== ROOT ROUTE ====================
 
 @api_router.get("/")
