@@ -85,10 +85,21 @@ class Donation(BaseModel):
     donor_name: str
     donor_phone: Optional[str] = None
     message: Optional[str] = None
-    charity_contribution: float = 5.0  # ₹5 per donation
+    # ₹15 Rule: ₹10 maintenance + ₹5 charity (100% LOCKED)
+    maintenance_fee: float = 10.0  # ₹10 system maintenance
+    charity_contribution: float = 5.0  # ₹5 patient charity fund
+    total_platform_fee: float = 15.0  # ₹15 total (₹10 + ₹5)
     user_id: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     status: str = "pending"  # pending, confirmed
+
+# Master Password for Founder Access
+class MasterPasswordVerify(BaseModel):
+    password: str
+
+# System Configuration
+MASTER_PASSWORD = "MuqaddasFounder2024@Arif"  # Founder Master Password
+FOUNDER_EARNINGS_THRESHOLD = 50000  # ₹50,000 threshold for 100% charity redirect
 
 class FundStats(BaseModel):
     total_donations: float
