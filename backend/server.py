@@ -97,9 +97,9 @@ class Donation(BaseModel):
 class MasterPasswordVerify(BaseModel):
     password: str
 
-# System Configuration
-MASTER_PASSWORD = "MuqaddasFounder2024@Arif"  # Founder Master Password
-FOUNDER_EARNINGS_THRESHOLD = 50000  # ₹50,000 threshold for 100% charity redirect
+# System Configuration from Environment
+MASTER_PASSWORD = os.environ.get('MASTER_PASSWORD', '')
+FOUNDER_EARNINGS_THRESHOLD = int(os.environ.get('FOUNDER_EARNINGS_THRESHOLD', 50000))
 
 class FundStats(BaseModel):
     total_donations: float
