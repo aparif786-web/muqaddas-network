@@ -184,7 +184,7 @@ VIP_LEVELS_DATA = [
         "name": "Gold",
         "recharge_requirement": 5000,
         "monthly_fee": 599,
-        "gaming_bonus": 15,
+        "charity_bonus": 15,
         "free_spins_daily": 10,
         "education_discount": 15,
         "priority_support": True,
