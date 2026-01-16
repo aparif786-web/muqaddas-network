@@ -1177,7 +1177,7 @@ COMMISSION_BRACKETS = [
     {"min": 2000001, "max": 10000000, "rate": 8},
     {"min": 10000001, "max": 50000000, "rate": 12},
     {"min": 50000001, "max": 150000000, "rate": 16},
-    {"min": 150000001, "max": float('inf'), "rate": 20},
+    {"min": 150000001, "max": 999999999999, "rate": 20},
 ]
 
 # Legacy Agency Levels (for backward compatibility)
