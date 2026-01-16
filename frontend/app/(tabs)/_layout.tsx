@@ -22,7 +22,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: '#FFD700',
         tabBarInactiveTintColor: '#808080',
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 10,
           fontWeight: '500',
         },
       }}
@@ -42,6 +42,15 @@ export default function TabLayout() {
           title: 'Wallet',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="wallet" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="rewards"
+        options={{
+          title: 'Rewards',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="gift" size={size} color={color} />
           ),
         }}
       />
