@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { AuthProvider } from '../src/contexts/AuthContext';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function RootLayout() {
   return (
@@ -22,6 +23,7 @@ export default function RootLayout() {
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="login" />
           </Stack>
+          <SpeedInsights />
         </AuthProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
