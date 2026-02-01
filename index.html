@@ -1,221 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Muqaddas Network</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    body {
-      background: #f7f9fc;
-      color: #222;
-      line-height: 1.6;
-    }
-
-    header {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      padding: 70px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-
-    header p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-      max-width: 700px;
-      margin: auto;
-    }
-
-    .buttons {
-      margin-top: 30px;
-    }
-
-    .btn {
-      display: inline-block;
-      margin: 10px;
-      padding: 14px 28px;
-      border-radius: 30px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: 0.3s ease;
-    }
-
-    .btn-android {
-      background: #3ddc84;
-      color: #000;
-    }
-
-    .btn-ios {
-      background: #000;
-      color: #fff;
-    }
-
-    .btn-charity {
-      background: #e63946;
-      color: #fff;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      opacity: 0.9;
-    }
-
-    section {
-      padding: 70px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    section h2 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 40px;
-      color: #203a43;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-    }
-
-    .card {
-      background: #fff;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      transition: 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card h3 {
-      margin-bottom: 15px;
-      color: #0f2027;
-    }
-
-    .contact-box {
-      text-align: center;
-      max-width: 600px;
-      margin: auto;
-    }
-
-    .contact-box p {
-      margin-bottom: 10px;
-      font-size: 1.05rem;
-    }
-
-    footer {
-      background: #0f2027;
-      color: #fff;
-      text-align: center;
-      padding: 25px 15px;
-      font-size: 0.9rem;
-    }
-
-    footer span {
-      opacity: 0.7;
-    }
-  </style>
+    <title>Muqaddas Network 💚 | Global Sultanat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
+        #charity-counter { position: absolute; top: 20px; left: 20px; font-size: 24px; color: #00ff00; }
+        .registration-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+        button { background: #008000; color: white; padding: 15px 30px; border: none; cursor: pointer; font-size: 18px; }
+    </style>
 </head>
 <body>
-
-  <!-- HEADER -->
-  <header>
-    <h1>Muqaddas Network</h1>
-    <p>A digital platform dedicated to education, community service, and positive impact through technology.</p>
-
-    <div class="buttons">
-      <a href="#" class="btn btn-android">📱 Download for Android</a>
-      <a href="#" class="btn btn-ios">🍎 Download for iOS</a>
-      <a href="#" class="btn btn-charity">❤️ Support Our Charity</a>
+    <div id="charity-counter">People Helped: <span id="count">0</span></div>
+    
+    <div class="registration-box">
+        <h1>Muqaddas Network 💚</h1>
+        <p>Join the World's Biggest Charity Mission</p>
+        <p>Fee: 1 Rupee / $1 USD</p>
+        <button onclick="startRegistration()">Register Now</button>
     </div>
-  </header>
 
-  <!-- ABOUT -->
-  <section>
-    <h2>About Us</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Who We Are</h3>
-        <p>
-          Muqaddas Network is a mission-driven initiative focused on education,
-          digital empowerment, and social welfare through modern technology.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>What We Do</h3>
-        <p>
-          We build apps, platforms, and digital solutions that help communities
-          learn, grow, and support charitable causes efficiently.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Why It Matters</h3>
-        <p>
-          Technology should serve humanity. Our goal is to use innovation to
-          create real-world positive impact.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- MISSION & VISION -->
-  <section>
-    <h2>Mission & Vision</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Our Mission</h3>
-        <p>
-          To empower individuals and communities through accessible digital
-          tools, education, and transparent charity initiatives.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Our Vision</h3>
-        <p>
-          A future where technology bridges gaps, uplifts communities, and
-          creates equal opportunities for learning and growth.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section>
-    <h2>Contact Us</h2>
-    <div class="contact-box">
-      <p>📧 Email: support@muqaddasnetwork.com</p>
-      <p>🌍 Website: aparif786-web.github.io</p>
-      <p>🤝 For partnerships, charity, or support, feel free to reach out.</p>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 Muqaddas Network</p>
-    <span>Built with ❤️ using GitHub Pages</span>
-  </footer>
-
+    <script>
+        // Yahan Three.js ka 3D background logic aayega
+        // Sultan ke liye 💚 symbol ko center mein rotate karwana hai
+    </script>
 </body>
 </html>
