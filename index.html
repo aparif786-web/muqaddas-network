@@ -3,223 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <title>Muqaddas Network 💚 | Global Charity Mission</title>
-
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore-compat.js"></script>
+
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background: #000;
-            color: #ffffff;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
+        body { margin: 0; overflow: hidden; background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+        
         #charity-counter {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            font-size: 20px;
-            color: #00ff99;
-            font-weight: bold;
-            z-index: 10;
+            position: fixed; top: 20px; left: 20px; font-size: 24px;
+            color: #00ff99; font-weight: bold; z-index: 10;
+            text-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
         }
 
         .registration-box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.75);
-            padding: 35px;
-            border-radius: 12px;
-            text-align: center;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 0 25px rgba(0, 255, 153, 0.3);
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.85); padding: 40px; border-radius: 15px;
+            text-align: center; width: 90%; max-width: 400px;
+            border: 1px solid rgba(0, 255, 153, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 153, 0.2);
         }
 
-        .registration-box h1 {
-            margin-bottom: 10px;
-            color: #00ff99;
-        }
-
-        .registration-box p {
-            margin: 8px 0;
-            font-size: 15px;
-        }
-
+        h1 { color: #00ff99; margin-bottom: 5px; }
+        .badge { color: #ffcc00; font-weight: bold; border: 1px solid #ffcc00; padding: 5px 10px; border-radius: 5px; display: inline-block; margin: 15px 0; font-size: 14px; }
+        p { font-size: 16px; line-height: 1.6; }
+        
         button {
-            margin-top: 20px;
-            background: #00aa55;
-            color: #fff;
-            padding: 14px 28px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 17px;
-            width: 100%;
+            margin-top: 25px; background: #00aa55; color: #fff; padding: 15px;
+            border: none; border-radius: 8px; cursor: pointer; font-size: 18px;
+            width: 100%; transition: 0.3s; font-weight: bold;
         }
+        button:hover { background: #00ff99; color: #000; transform: scale(1.02); }
 
-        button:hover {
-            background: #00ff99;
-            color: #000;
-        }
-
-        .links {
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .links a {
-            color: #00ff99;
-            text-decoration: none;
-            margin: 0 8px;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
-
-        .legal {
-            margin-top: 15px;
-            font-size: 0.9rem;
-        }
+        .links { margin-top: 20px; font-size: 13px; opacity: 0.8; }
+        .links a { color: #00ff99; text-decoration: none; margin: 0 5px; }
+        .legal { margin-top: 20px; font-size: 14px; }
     </style>
 </head>
-
 <body>
 
-    <!-- Charity Counter -->
     <div id="charity-counter">
-        People Helped: <span id="count">0</span>
+        💚 People Helped: <span id="count">Loading...</span>
     </div>
 
-    <!-- Registration Box -->
     <div class="registration-box">
         <h1>Muqaddas Network 💚</h1>
-        <p style="color: #ffcc00; font-weight: bold; border: 1px solid #ffcc00; padding: 5px; border-radius: 5px; margin: 10px 0;">
-    🏆 Targeting Guinness World Record for Humanity
-</p>
-        <p><strong>Global Charity Mission</strong></p>
-        <p>Join hands to help humanity worldwide.</p>
-        <p><strong>Registration Fee:</strong> ₹15 / $1 USD</p>
+        <div class="badge">🏆 Guinness World Record Mission</div>
+        <p><strong>Registration:</strong> ₹15 / $1 USD</p>
+        <p style="font-size: 13px; opacity: 0.7;">(₹10 Tech Dev | ₹5 Patient Charity)</p>
 
-        <!-- Legal Agreement -->
         <div class="legal">
             <input type="checkbox" id="legalAgree">
-            I accept the
-            <a href="#" style="color:#00ff99;">Digital Legal Agreement</a>
+            I accept the <a href="#">Digital Legal Agreement</a>
         </div>
 
         <button onclick="startRegistration()">Register Now</button>
 
-        <!-- Extra Links -->
         <div class="links">
-            <a href="#">About Us</a> |
-            <a href="#">Mission & Vision</a> |
-            <a href="#">Charity</a> |
-            <a href="#">Contact</a>
+            <a href="#">Mission</a> | <a href="#">Charity</a> | <a href="#">Contact</a>
         </div>
-
-        <div class="links">
-            <a href="#">📱 Android App</a> |
-            <a href="#">🍎 iOS App</a>
+        <div class="links" style="margin-top: 10px;">
+            <a href="#">📱 Android</a> | <a href="#">🍎 iOS</a>
         </div>
     </div>
 
-    <!-- JavaScript -->
     <script>
-        /* -----------------------------
-           Registration + Legal Check
-        ------------------------------*/
-        function startRegistration() {
-            const agree = document.getElementById('legalAgree');
+        /* --- FIREBASE CONFIGURATION --- */
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQJcN5Ec_F9dZU7tif4Q_bTDBxo1a_Y4U",
+            authDomain: "muqaddas-technology.firebaseapp.com",
+            databaseURL: "https://muqaddas-technology-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "muqaddas-technology",
+            storageBucket: "muqaddas-technology.firebasestorage.app",
+            messagingSenderId: "312265965405",
+            appId: "1:312265965405:web:ac25af17d553c32f3272b4",
+            measurementId: "G-JYDYPB5GT6"
+        };
 
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const db = firebase.firestore();
+
+        // Sync Live Counter from Firebase
+        const charityRef = database.ref('live_stats/people_helped');
+        charityRef.on('value', (snapshot) => {
+            const val = snapshot.val() || 0;
+            document.getElementById("count").innerText = val.toLocaleString();
+        });
+
+        /* --- LOGIC: REGISTRATION & 15 RS SPLIT --- */
+        async function startRegistration() {
+            const agree = document.getElementById('legalAgree');
             if (!agree.checked) {
                 alert("Please accept the Digital Legal Agreement first.");
                 return;
             }
 
-            processPayment(15);
-        }
+            try {
+                // 1. Transactional Update for Global Record
+                await charityRef.transaction((curr) => (curr || 0) + 1);
 
-        /* -----------------------------
-           Payment Processing (Demo)
-        ------------------------------*/
-        function processPayment(amount) {
-            if (amount === 15) {
-                let maintenance = 10;
-                let charityFund = 5;
+                // 2. Sovereign Kernel: Log the 15 Rs Split (10/5)
+                await db.collection("registrations").add({
+                    total: 15,
+                    maintenance: 10,
+                    charity: 5,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    symbol: "💚"
+                });
 
-                console.log("Maintenance Fund: ₹" + maintenance);
-                console.log("Charity Fund: ₹" + charityFund);
-
-                updateLiveCounter(charityFund);
-                alert("Registration Successful 💚\nThank you for supporting humanity.");
+                alert("Mission Joined Successfully! 💚\nThank you for helping humanity.");
+            } catch (e) {
+                console.error(e);
+                alert("Connection error. Please try again.");
             }
         }
 
-        /* -----------------------------
-           Live Counter Update
-        ------------------------------*/
-        let peopleHelped = 0;
-        function updateLiveCounter() {
-            peopleHelped++;
-            document.getElementById("count").innerText = peopleHelped;
-        }
-
-        /* -----------------------------
-           Three.js Starfield Background
-        ------------------------------*/
+        /* --- THREE.JS: STARFIELD BACKGROUND --- */
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(
-            75,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            1000
-        );
-
-        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
         const starsGeometry = new THREE.BufferGeometry();
-        const starsCount = 5000;
+        const starsCount = 6000;
         const positions = new Float32Array(starsCount * 3);
-
         for (let i = 0; i < starsCount * 3; i++) {
             positions[i] = (Math.random() - 0.5) * 2000;
         }
-
-        starsGeometry.setAttribute(
-            'position',
-            new THREE.BufferAttribute(positions, 3)
-        );
-
-        const starsMaterial = new THREE.PointsMaterial({
-            color: 0x00ff99,
-            size: 0.7
-        });
-
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const starsMaterial = new THREE.PointsMaterial({ color: 0x00ff99, size: 0.8 });
         const starField = new THREE.Points(starsGeometry, starsMaterial);
         scene.add(starField);
 
         camera.position.z = 1;
-
         function animate() {
             requestAnimationFrame(animate);
-            starField.rotation.y += 0.0008;
+            starField.rotation.y += 0.0005;
+            starField.rotation.x += 0.0002;
             renderer.render(scene, camera);
         }
         animate();
@@ -230,6 +157,5 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
-
 </body>
 </html>
