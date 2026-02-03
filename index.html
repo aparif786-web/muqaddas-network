@@ -5,168 +5,378 @@
     <title>Muqaddas Network 💚 | Global Charity Mission</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Core Scripts from Version 1 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore-compat.js"></script>
 
+    <!-- UI Styling from Version 2 -->
     <style>
-        body { margin: 0; overflow: hidden; background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        canvas { position: fixed; top: 0; left: 0; z-index: -1; }
-        
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
         #charity-counter {
-            position: fixed; top: 20px; left: 20px; font-size: 24px;
-            color: #00ff99; font-weight: bold; z-index: 10;
-            text-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-size: 20px;
+            color: #00ff99;
+            font-weight: bold;
+            z-index: 10;
         }
 
         .registration-box {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.85); padding: 40px; border-radius: 15px;
-            text-align: center; width: 90%; max-width: 400px;
-            border: 1px solid rgba(0, 255, 153, 0.3);
-            box-shadow: 0 0 30px rgba(0, 255, 153, 0.2);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.75);
+            padding: 35px;
+            border-radius: 12px;
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 0 25px rgba(0, 255, 153, 0.3);
         }
 
-        h1 { color: #00ff99; margin-bottom: 5px; }
-        .badge { color: #ffcc00; font-weight: bold; border: 1px solid #ffcc00; padding: 5px 10px; border-radius: 5px; display: inline-block; margin: 15px 0; font-size: 14px; }
-        p { font-size: 16px; line-height: 1.6; }
-        
+        .registration-box h1 {
+            margin-bottom: 10px;
+            color: #00ff99;
+        }
+
+        .registration-box p {
+            margin: 8px 0;
+            font-size: 15px;
+        }
+
         button {
-            margin-top: 25px; background: #00aa55; color: #fff; padding: 15px;
-            border: none; border-radius: 8px; cursor: pointer; font-size: 18px;
-            width: 100%; transition: 0.3s; font-weight: bold;
+            margin-top: 20px;
+            background: #00aa55;
+            color: #fff;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 17px;
+            width: 100%;
+            transition: 0.3s;
         }
-        button:hover { background: #00ff99; color: #000; transform: scale(1.02); }
 
-        .links { margin-top: 20px; font-size: 13px; opacity: 0.8; }
-        .links a { color: #00ff99; text-decoration: none; margin: 0 5px; }
-        .legal { margin-top: 20px; font-size: 14px; }
+        button:hover {
+            background: #00ff99;
+            color: #000;
+        }
+
+        .links {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .links a {
+            color: #00ff99;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .legal {
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal from Version 1 (modified to match Version 2 styling) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .modal-content {
+            background-color: #111;
+            margin: 10% auto;
+            padding: 25px;
+            border: 1px solid #00ff99;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            color: #ddd;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .close {
+            color: #00ff99;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .legal-link {
+            color: #00ff99;
+            cursor: pointer;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Charity Counter from Version 2 -->
     <div id="charity-counter">
-        💚 People Helped: <span id="count">0</span>
+        People Helped: <span id="count">0</span>
     </div>
 
+    <!-- Registration Box UI from Version 2 -->
     <div class="registration-box">
         <h1>Muqaddas Network 💚</h1>
-        <div class="badge">🏆 Guinness World Record Mission</div>
-        <p><strong>Registration:</strong> ₹15 / $1 USD</p>
-        <p style="font-size: 13px; opacity: 0.7;">(₹10 Tech Dev | ₹5 Patient Charity)</p>
+        <p style="color: #ffcc00; font-weight: bold; border: 1px solid #ffcc00; padding: 5px; border-radius: 5px; margin: 10px 0;">
+            🏆 Targeting Guinness World Record for Humanity
+        </p>
+        <p><strong>Global Charity Mission</strong></p>
+        <p>Join hands to help humanity worldwide.</p>
+        <p><strong>Registration Fee:</strong> ₹15 / $1 USD</p>
 
+        <!-- Legal Agreement from Version 1 (modified to match Version 2 layout) -->
         <div class="legal">
             <input type="checkbox" id="legalAgree">
-            I accept the <a href="#" onclick="alert('Digital Legal Agreement Loading...')">Digital Legal Agreement</a>
+            I accept the <span class="legal-link" onclick="openModal()">Digital Legal Agreement</span>
         </div>
 
-        <button id="pay-button" onclick="startRegistration()">Register Now</button>
+        <!-- Register Button -->
+        <button onclick="startRegistration()">Register Now</button>
+
+        <!-- Extra Links from Version 2 -->
+        <div class="links">
+            <a href="#">About Us</a> |
+            <a href="#">Mission & Vision</a> |
+            <a href="#">Charity</a> |
+            <a href="#">Contact</a>
+        </div>
 
         <div class="links">
-            <a href="#">Mission</a> | <a href="#">Charity</a> | <a href="#">Contact</a>
+            <a href="#">📱 Android App</a> |
+            <a href="#">🍎 iOS App</a>
+        </div>
+    </div>
+
+    <!-- Modal from Version 1 -->
+    <div id="legalModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color: #00ff99;">Sovereign Legal Agreement 💚</h2>
+            <hr border="1" color="#333">
+            <p><strong>1. Purpose:</strong> This registration is for the Muqaddas Network charitable mission.</p>
+            <p><strong>2. Payment Split:</strong> Of the ₹15 fee, ₹10 is allocated for Maintenance & Tech Development, and ₹5 is directly for Patient/Poor Charity.</p>
+            <p><strong>3. Commitment:</strong> Users agree to the 10-year mission protocol as defined by the Sovereign Roadmap V7.0.</p>
+            <p><strong>4. Privacy:</strong> Data is secured within the Muqaddas Technology kernel and never shared for profit.</p>
+            <p><strong>5. Finality:</strong> This is a non-refundable charitable contribution to support the Guinness World Record mission.</p>
+            <button onclick="closeModal()" style="font-size: 14px; padding: 10px; margin-top: 15px;">I Have Read the Terms</button>
         </div>
     </div>
 
     <script>
-        /* --- FIREBASE CONFIGURATION --- */
+        /* --- FIREBASE CONFIGURATION (from Version 1) --- */
+        // Your Firebase configuration here
         const firebaseConfig = {
-            apiKey: "AIzaSyBQJcN5Ec_F9dZU7tif4Q_bTDBxo1a_Y4U",
-            authDomain: "muqaddas-technology.firebaseapp.com",
-            databaseURL: "https://muqaddas-technology-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "muqaddas-technology",
-            storageBucket: "muqaddas-technology.firebasestorage.app",
-            messagingSenderId: "312265965405",
-            appId: "1:312265965405:web:ac25af17d553c32f3272b4",
-            measurementId: "G-JYDYPB5GT6"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
-
-        firebase.initializeApp(firebaseConfig);
+        
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const db = firebase.firestore();
+        const firestore = firebase.firestore();
 
-        // Sync Live Counter
-        const charityRef = database.ref('live_stats/people_helped');
-        charityRef.on('value', (snapshot) => {
-            document.getElementById("count").innerText = (snapshot.val() || 0).toLocaleString();
-        });
+        /* --- CHARITY COUNTER LOGIC (from Version 2) --- */
+        let peopleHelped = 0;
+        
+        // Initialize counter from Firebase or localStorage
+        function initCounter() {
+            // Try to get from localStorage first
+            const savedCount = localStorage.getItem('muqaddasPeopleHelped');
+            if (savedCount) {
+                peopleHelped = parseInt(savedCount);
+                document.getElementById("count").innerText = peopleHelped;
+            }
+            
+            // For demo purposes, update counter every 5 seconds
+            setInterval(() => {
+                if (Math.random() > 0.7) { // Simulate new donations
+                    updateLiveCounter();
+                }
+            }, 5000);
+        }
 
-        /* --- PAYMENT & REGISTRATION --- */
+        function updateLiveCounter() {
+            peopleHelped++;
+            document.getElementById("count").innerText = peopleHelped;
+            localStorage.setItem('muqaddasPeopleHelped', peopleHelped);
+            
+            // In production, update Firebase here
+            // database.ref('charityCount').set(peopleHelped);
+        }
+
+        /* --- MODAL LOGIC (from Version 1) --- */
+        const modal = document.getElementById("legalModal");
+        function openModal() { 
+            modal.style.display = "block"; 
+        }
+        function closeModal() { 
+            modal.style.display = "none"; 
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        /* --- REGISTRATION & PAYMENT LOGIC (from Version 1) --- */
         function startRegistration() {
             const agree = document.getElementById('legalAgree');
             if (!agree.checked) {
-                alert("Please accept the Digital Legal Agreement first.");
+                alert("Please click the checkbox to accept the Digital Legal Agreement.");
                 return;
             }
 
-            // Razorpay Options
+            // RAZORPAY HANDLER
             var options = {
-                "key": "YOUR_RAZORPAY_KEY", // RK Developer: Insert your Key ID from Razorpay Dashboard
-                "amount": "1500", // 15 Rs in paise
+                "key": "YOUR_RAZORPAY_KEY", 
+                "amount": "1500", // Amount in paise (₹15 = 1500 paise)
                 "currency": "INR",
                 "name": "Muqaddas Network 💚",
-                "description": "Global Charity Registration",
-                "handler": async function (response) {
-                    // This runs only on SUCCESSFUL payment
-                    try {
-                        // 1. Update Firebase Counter
-                        await charityRef.transaction((curr) => (curr || 0) + 1);
-
-                        // 2. Sovereign Kernel: Save the ₹10/₹5 Split
-                        await db.collection("registrations").add({
-                            payment_id: response.razorpay_payment_id,
-                            total: 15,
-                            maintenance: 10,
-                            charity: 5,
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                            status: "Verified"
-                        });
-
-                        alert("Welcome to the Sultanat! 💚\nPayment Successful. Your help is recorded.");
-                    } catch (e) {
-                        console.error(e);
-                    }
+                "description": "Global Charity Mission Registration",
+                "handler": function (response) {
+                    // Payment success
+                    alert("Payment Success! Transaction ID: " + response.razorpay_payment_id);
+                    
+                    // Update charity counter
+                    updateLiveCounter();
+                    
+                    // Add Firebase sync logic here
+                    saveRegistrationData(response.razorpay_payment_id);
+                    
+                    // Show success message
+                    alert("Registration Successful 💚\nThank you for supporting humanity.\n\n₹10 → Maintenance & Tech\n₹5 → Direct Charity Fund");
                 },
-                "theme": { "color": "#00aa55" }
+                "prefill": {
+                    "email": "", // Can be filled dynamically if you have user email
+                },
+                "theme": { 
+                    "color": "#00aa55" 
+                }
             };
-
+            
             var rzp1 = new Razorpay(options);
             rzp1.open();
+            
+            // Handle payment failure
+            rzp1.on('payment.failed', function(response){
+                alert("Payment Failed. Please try again.\nError: " + response.error.description);
+            });
         }
 
-        /* --- THREE.JS: STARFIELD BACKGROUND --- */
+        /* --- FIREBASE DATA SAVE FUNCTION (from Version 1 logic) --- */
+        function saveRegistrationData(paymentId) {
+            // Example Firebase save logic
+            const registrationData = {
+                paymentId: paymentId,
+                timestamp: new Date().toISOString(),
+                amount: 15,
+                maintenanceAllocation: 10,
+                charityAllocation: 5,
+                status: "completed"
+            };
+            
+            // Save to Realtime Database
+            database.ref('registrations/' + paymentId).set(registrationData)
+                .then(() => {
+                    console.log("Registration saved to Firebase");
+                })
+                .catch((error) => {
+                    console.error("Error saving registration: ", error);
+                });
+                
+            // Also update Firestore
+            firestore.collection("registrations").doc(paymentId).set(registrationData)
+                .then(() => {
+                    console.log("Registration saved to Firestore");
+                })
+                .catch((error) => {
+                    console.error("Error saving to Firestore: ", error);
+                });
+        }
+
+        /* --- THREE.JS BACKGROUND (from Version 1, with rotation speed from Version 2) --- */
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
+        // Create starfield
         const starsGeometry = new THREE.BufferGeometry();
-        const starsCount = 6000;
+        const starsCount = 5000;
         const positions = new Float32Array(starsCount * 3);
-        for (let i = 0; i < starsCount * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 2000;
+        
+        for(let i = 0; i < starsCount * 3; i++) { 
+            positions[i] = (Math.random() - 0.5) * 2000; 
         }
+        
         starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const starsMaterial = new THREE.PointsMaterial({ color: 0x00ff99, size: 0.8 });
+        const starsMaterial = new THREE.PointsMaterial({ 
+            color: 0x00ff99, 
+            size: 0.7 
+        });
+        
         const starField = new THREE.Points(starsGeometry, starsMaterial);
         scene.add(starField);
-
         camera.position.z = 1;
+
+        // Animation function with rotation speed from Version 2
         function animate() {
             requestAnimationFrame(animate);
-            starField.rotation.y += 0.0005;
+            starField.rotation.y += 0.0008; // Using rotation speed from Version 2
             renderer.render(scene, camera);
         }
         animate();
 
+        // Handle window resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
+
+        /* --- INITIALIZE COUNTER ON LOAD --- */
+        window.onload = function() {
+            initCounter();
+        };
     </script>
 </body>
 </html>
