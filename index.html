@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
@@ -48,7 +49,7 @@
 <body>
 
     <div id="charity-counter">
-        💚 People Helped: <span id="count">Loading...</span>
+        💚 People Helped: <span id="count">0</span>
     </div>
 
     <div class="registration-box">
@@ -59,16 +60,13 @@
 
         <div class="legal">
             <input type="checkbox" id="legalAgree">
-            I accept the <a href="#">Digital Legal Agreement</a>
+            I accept the <a href="#" onclick="alert('Digital Legal Agreement Loading...')">Digital Legal Agreement</a>
         </div>
 
-        <button onclick="startRegistration()">Register Now</button>
+        <button id="pay-button" onclick="startRegistration()">Register Now</button>
 
         <div class="links">
             <a href="#">Mission</a> | <a href="#">Charity</a> | <a href="#">Contact</a>
-        </div>
-        <div class="links" style="margin-top: 10px;">
-            <a href="#">📱 Android</a> | <a href="#">🍎 iOS</a>
         </div>
     </div>
 
@@ -89,39 +87,53 @@
         const database = firebase.database();
         const db = firebase.firestore();
 
-        // Sync Live Counter from Firebase
+        // Sync Live Counter
         const charityRef = database.ref('live_stats/people_helped');
         charityRef.on('value', (snapshot) => {
-            const val = snapshot.val() || 0;
-            document.getElementById("count").innerText = val.toLocaleString();
+            document.getElementById("count").innerText = (snapshot.val() || 0).toLocaleString();
         });
 
-        /* --- LOGIC: REGISTRATION & 15 RS SPLIT --- */
-        async function startRegistration() {
+        /* --- PAYMENT & REGISTRATION --- */
+        function startRegistration() {
             const agree = document.getElementById('legalAgree');
             if (!agree.checked) {
                 alert("Please accept the Digital Legal Agreement first.");
                 return;
             }
 
-            try {
-                // 1. Transactional Update for Global Record
-                await charityRef.transaction((curr) => (curr || 0) + 1);
+            // Razorpay Options
+            var options = {
+                "key": "YOUR_RAZORPAY_KEY", // RK Developer: Insert your Key ID from Razorpay Dashboard
+                "amount": "1500", // 15 Rs in paise
+                "currency": "INR",
+                "name": "Muqaddas Network 💚",
+                "description": "Global Charity Registration",
+                "handler": async function (response) {
+                    // This runs only on SUCCESSFUL payment
+                    try {
+                        // 1. Update Firebase Counter
+                        await charityRef.transaction((curr) => (curr || 0) + 1);
 
-                // 2. Sovereign Kernel: Log the 15 Rs Split (10/5)
-                await db.collection("registrations").add({
-                    total: 15,
-                    maintenance: 10,
-                    charity: 5,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    symbol: "💚"
-                });
+                        // 2. Sovereign Kernel: Save the ₹10/₹5 Split
+                        await db.collection("registrations").add({
+                            payment_id: response.razorpay_payment_id,
+                            total: 15,
+                            maintenance: 10,
+                            charity: 5,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                            status: "Verified"
+                        });
 
-                alert("Mission Joined Successfully! 💚\nThank you for helping humanity.");
-            } catch (e) {
-                console.error(e);
-                alert("Connection error. Please try again.");
-            }
+                        alert("Welcome to the Sultanat! 💚\nPayment Successful. Your help is recorded.");
+                    } catch (e) {
+                        console.error(e);
+                    }
+                },
+                "theme": { "color": "#00aa55" }
+            };
+
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
         }
 
         /* --- THREE.JS: STARFIELD BACKGROUND --- */
@@ -146,7 +158,6 @@
         function animate() {
             requestAnimationFrame(animate);
             starField.rotation.y += 0.0005;
-            starField.rotation.x += 0.0002;
             renderer.render(scene, camera);
         }
         animate();
