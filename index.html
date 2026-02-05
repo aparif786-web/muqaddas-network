@@ -7,10 +7,12 @@
 
     <!-- Core Scripts from Version 1 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore-compat.js"></script>
+    
+    <!-- QR Code Generator Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
     <!-- UI Styling from Version 2 -->
     <style>
@@ -44,7 +46,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.85);
             padding: 35px;
             border-radius: 12px;
             text-align: center;
@@ -111,18 +113,18 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0,0,0,0.9);
         }
         .modal-content {
             background-color: #111;
-            margin: 10% auto;
+            margin: 5% auto;
             padding: 25px;
             border: 1px solid #00ff99;
-            width: 80%;
+            width: 90%;
             max-width: 500px;
             border-radius: 10px;
             color: #ddd;
-            max-height: 70vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
         .close {
@@ -137,6 +139,100 @@
             color: #00ff99;
             cursor: pointer;
             text-decoration: underline;
+        }
+
+        /* Payment Modal Styles */
+        #paymentModal .modal-content {
+            max-width: 400px;
+        }
+        
+        .phonepe-options {
+            margin: 20px 0;
+        }
+        
+        .payment-option {
+            background: rgba(0, 255, 153, 0.1);
+            border: 1px solid #00ff99;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .payment-option:hover {
+            background: rgba(0, 255, 153, 0.2);
+        }
+        
+        .payment-option.active {
+            background: rgba(0, 255, 153, 0.3);
+            border-color: #ffcc00;
+        }
+        
+        .payment-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .upi-id {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            word-break: break-all;
+        }
+        
+        .upi-id strong {
+            color: #00ff99;
+        }
+        
+        #qrcode {
+            margin: 20px auto;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .payment-instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+            text-align: left;
+        }
+        
+        .payment-instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .payment-instructions li {
+            margin: 8px 0;
+        }
+        
+        .copy-btn {
+            background: #00aa55;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .copy-btn:hover {
+            background: #00ff99;
+            color: #000;
+        }
+        
+        .success-message {
+            color: #00ff99;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0, 255, 153, 0.1);
+            border-radius: 5px;
         }
 
         /* Mobile-specific styles */
@@ -154,6 +250,16 @@
             
             .registration-box h1 {
                 font-size: 24px;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                padding: 20px;
+                width: 95%;
+            }
+            
+            #qrcode {
+                transform: scale(0.9);
             }
         }
     </style>
@@ -178,7 +284,7 @@
         <!-- Legal Agreement from Version 1 (modified to match Version 2 layout) -->
         <div class="legal">
             <input type="checkbox" id="legalAgree">
-            I accept the <span class="legal-link" onclick="openModal()">Digital Legal Agreement</span>
+            I accept the <span class="legal-link" onclick="openModal('legalModal')">Digital Legal Agreement</span>
         </div>
 
         <!-- Register Button -->
@@ -198,10 +304,10 @@
         </div>
     </div>
 
-    <!-- Modal from Version 1 -->
+    <!-- Legal Agreement Modal -->
     <div id="legalModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModal('legalModal')">&times;</span>
             <h2 style="color: #00ff99;">Sovereign Legal Agreement 💚</h2>
             <hr border="1" color="#333">
             <p><strong>1. Purpose:</strong> This registration is for the Muqaddas Network charitable mission.</p>
@@ -209,13 +315,70 @@
             <p><strong>3. Commitment:</strong> Users agree to the 10-year mission protocol as defined by the Sovereign Roadmap V7.0.</p>
             <p><strong>4. Privacy:</strong> Data is secured within the Muqaddas Technology kernel and never shared for profit.</p>
             <p><strong>5. Finality:</strong> This is a non-refundable charitable contribution to support the Guinness World Record mission.</p>
-            <button onclick="closeModal()" style="font-size: 14px; padding: 10px; margin-top: 15px;">I Have Read the Terms</button>
+            <button onclick="closeModal('legalModal')" style="font-size: 14px; padding: 10px; margin-top: 15px;">I Have Read the Terms</button>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('paymentModal')">&times;</span>
+            <h2 style="color: #00ff99;">PhonePe Payment 💚</h2>
+            <p>Complete your ₹15 registration fee using PhonePe</p>
+            
+            <div class="phonepe-options">
+                <div class="payment-option active" id="upiOption" onclick="selectPaymentOption('upi')">
+                    <span class="payment-icon">📱</span>
+                    <strong>UPI Payment</strong>
+                    <p style="margin: 5px 0 0 0; font-size: 14px;">Pay via any UPI app (PhonePe, GPay, Paytm, etc.)</p>
+                </div>
+                
+                <div class="payment-option" id="qrOption" onclick="selectPaymentOption('qr')">
+                    <span class="payment-icon">📷</span>
+                    <strong>QR Code Scan</strong>
+                    <p style="margin: 5px 0 0 0; font-size: 14px;">Scan QR Code with PhonePe app</p>
+                </div>
+            </div>
+            
+            <div id="upiPayment" class="payment-section">
+                <div class="upi-id">
+                    <strong>UPI ID:</strong> muqaddasnetwork@ybl<br>
+                    <strong>Amount:</strong> ₹15
+                </div>
+                <button class="copy-btn" onclick="copyUPI()">Copy UPI ID</button>
+                <button class="copy-btn" onclick="openPhonePeApp()" style="margin-left: 10px;">Open PhonePe App</button>
+            </div>
+            
+            <div id="qrPayment" class="payment-section" style="display: none;">
+                <div id="qrcode"></div>
+                <p>Scan this QR code with PhonePe app</p>
+            </div>
+            
+            <div class="payment-instructions">
+                <h4 style="color: #00ff99; margin-top: 20px;">Payment Instructions:</h4>
+                <ol>
+                    <li>Copy the UPI ID above or scan the QR code</li>
+                    <li>Open PhonePe or any UPI app</li>
+                    <li>Send ₹15 to the provided UPI ID</li>
+                    <li>Enter your Transaction ID below after payment</li>
+                </ol>
+                
+                <div style="margin-top: 20px;">
+                    <label for="transactionId"><strong>Transaction ID / UTR:</strong></label>
+                    <input type="text" id="transactionId" placeholder="Enter your transaction ID" 
+                           style="width: 100%; padding: 10px; margin: 10px 0; background: #222; border: 1px solid #00ff99; color: white; border-radius: 5px;">
+                    <button onclick="verifyPayment()" style="width: 100%;">Verify Payment</button>
+                </div>
+            </div>
+            
+            <div id="paymentSuccess" class="success-message" style="display: none;">
+                ✅ Payment Verified Successfully! Thank you for your contribution.
+            </div>
         </div>
     </div>
 
     <script>
         /* --- FIREBASE CONFIGURATION (from Version 1) --- */
-        // Your Firebase configuration here
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -233,18 +396,15 @@
         /* --- CHARITY COUNTER LOGIC (from Version 2) --- */
         let peopleHelped = 0;
         
-        // Initialize counter from Firebase or localStorage
         function initCounter() {
-            // Try to get from localStorage first
             const savedCount = localStorage.getItem('muqaddasPeopleHelped');
             if (savedCount) {
                 peopleHelped = parseInt(savedCount);
                 document.getElementById("count").innerText = peopleHelped;
             }
             
-            // For demo purposes, update counter every 5 seconds
             setInterval(() => {
-                if (Math.random() > 0.7) { // Simulate new donations
+                if (Math.random() > 0.7) {
                     updateLiveCounter();
                 }
             }, 5000);
@@ -254,28 +414,25 @@
             peopleHelped++;
             document.getElementById("count").innerText = peopleHelped;
             localStorage.setItem('muqaddasPeopleHelped', peopleHelped);
-            
-            // In production, update Firebase here
-            // database.ref('charityCount').set(peopleHelped);
         }
 
-        /* --- MODAL LOGIC (from Version 1) --- */
-        const modal = document.getElementById("legalModal");
-        function openModal() { 
-            modal.style.display = "block"; 
+        /* --- MODAL LOGIC --- */
+        function openModal(modalId) { 
+            document.getElementById(modalId).style.display = "block"; 
         }
-        function closeModal() { 
-            modal.style.display = "none"; 
+        
+        function closeModal(modalId) { 
+            document.getElementById(modalId).style.display = "none"; 
         }
 
         // Close modal when clicking outside
         window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target.className === 'modal') {
+                event.target.style.display = "none";
             }
         }
 
-        /* --- REGISTRATION & PAYMENT LOGIC (from Version 1) --- */
+        /* --- REGISTRATION LOGIC --- */
         function startRegistration() {
             const agree = document.getElementById('legalAgree');
             if (!agree.checked) {
@@ -283,195 +440,136 @@
                 return;
             }
 
-            // RAZORPAY HANDLER
-            var options = {
-                "key": "YOUR_RAZORPAY_KEY", 
-                "amount": "1500", // Amount in paise (₹15 = 1500 paise)
-                "currency": "INR",
-                "name": "Muqaddas Network 💚",
-                "description": "Global Charity Mission Registration",
-                "handler": function (response) {
-                    // Payment success
-                    alert("Payment Success! Transaction ID: " + response.razorpay_payment_id);
-                    
-                    // Update charity counter
-                    updateLiveCounter();
-                    
-                    // Add Firebase sync logic here
-                    saveRegistrationData(response.razorpay_payment_id);
-                    
-                    // Show success message
-                    alert("Registration Successful 💚\nThank you for supporting humanity.\n\n₹10 → Maintenance & Tech\n₹5 → Direct Charity Fund");
-                },
-                "prefill": {
-                    "email": "", // Can be filled dynamically if you have user email
-                },
-                "theme": { 
-                    "color": "#00aa55" 
-                }
-            };
+            // Generate a unique reference ID
+            const referenceId = 'MUQ' + Date.now() + Math.floor(Math.random() * 1000);
+            localStorage.setItem('currentReferenceId', referenceId);
             
-            var rzp1 = new Razorpay(options);
-            rzp1.open();
+            // Generate QR code for payment
+            generateQRCode();
             
-            // Handle payment failure
-            rzp1.on('payment.failed', function(response){
-                alert("Payment Failed. Please try again.\nError: " + response.error.description);
+            // Show payment modal
+            openModal('paymentModal');
+        }
+
+        /* --- PAYMENT OPTION SELECTION --- */
+        function selectPaymentOption(option) {
+            // Remove active class from all options
+            document.getElementById('upiOption').classList.remove('active');
+            document.getElementById('qrOption').classList.remove('active');
+            
+            // Add active class to selected option
+            document.getElementById(option + 'Option').classList.add('active');
+            
+            // Show selected payment section
+            document.getElementById('upiPayment').style.display = option === 'upi' ? 'block' : 'none';
+            document.getElementById('qrPayment').style.display = option === 'qr' ? 'block' : 'none';
+        }
+
+        /* --- QR CODE GENERATION --- */
+        function generateQRCode() {
+            // Clear previous QR code
+            document.getElementById('qrcode').innerHTML = '';
+            
+            // Create UPI payment link
+            const upiId = 'muqaddasnetwork@ybl';
+            const amount = '15';
+            const note = 'Muqaddas Network Registration';
+            const referenceId = localStorage.getItem('currentReferenceId') || 'MUQ' + Date.now();
+            
+            // UPI payment URL format
+            const upiUrl = `upi://pay?pa=${upiId}&pn=Muqaddas%20Network&am=${amount}&tn=${note}&tr=${referenceId}`;
+            
+            // Generate QR code
+            QRCode.toCanvas(document.getElementById('qrcode'), upiUrl, {
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
             });
         }
 
-        /* --- FIREBASE DATA SAVE FUNCTION (from Version 1 logic) --- */
-        function saveRegistrationData(paymentId) {
-            // Example Firebase save logic
-            const registrationData = {
-                paymentId: paymentId,
+        /* --- COPY UPI ID --- */
+        function copyUPI() {
+            const upiId = 'muqaddasnetwork@ybl';
+            navigator.clipboard.writeText(upiId).then(() => {
+                alert('UPI ID copied to clipboard: ' + upiId);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Please manually copy: ' + upiId);
+            });
+        }
+
+        /* --- OPEN PHONEPE APP --- */
+        function openPhonePeApp() {
+            const upiId = 'muqaddasnetwork@ybl';
+            const amount = '15';
+            const note = 'Muqaddas Network Registration';
+            const referenceId = localStorage.getItem('currentReferenceId') || 'MUQ' + Date.now();
+            
+            // PhonePe deep link
+            const phonePeUrl = `phonepe://upi/pay?pa=${upiId}&pn=Muqaddas%20Network&am=${amount}&tn=${note}&tr=${referenceId}`;
+            
+            // Try to open PhonePe app
+            window.location.href = phonePeUrl;
+            
+            // Fallback to UPI link
+            setTimeout(() => {
+                window.location.href = `upi://pay?pa=${upiId}&pn=Muqaddas%20Network&am=${amount}&tn=${note}&tr=${referenceId}`;
+            }, 1000);
+        }
+
+        /* --- VERIFY PAYMENT --- */
+        function verifyPayment() {
+            const transactionId = document.getElementById('transactionId').value.trim();
+            
+            if (!transactionId) {
+                alert("Please enter your Transaction ID / UTR");
+                return;
+            }
+            
+            // In production, verify with your backend
+            // For demo, simulate successful verification
+            const referenceId = localStorage.getItem('currentReferenceId');
+            
+            // Save payment data
+            savePaymentData(referenceId, transactionId);
+            
+            // Show success message
+            document.getElementById('paymentSuccess').style.display = 'block';
+            
+            // Update charity counter
+            updateLiveCounter();
+            
+            // Close modal after 3 seconds
+            setTimeout(() => {
+                closeModal('paymentModal');
+                document.getElementById('paymentSuccess').style.display = 'none';
+                document.getElementById('transactionId').value = '';
+                
+                // Show success alert
+                alert("✅ Registration Successful 💚\n\nThank you for supporting humanity!\n\n₹10 → Maintenance & Tech\n₹5 → Direct Charity Fund\n\nYour Reference ID: " + referenceId);
+            }, 3000);
+        }
+
+        /* --- SAVE PAYMENT DATA TO FIREBASE --- */
+        function savePaymentData(referenceId, transactionId) {
+            const paymentData = {
+                referenceId: referenceId,
+                transactionId: transactionId,
                 timestamp: new Date().toISOString(),
                 amount: 15,
+                currency: 'INR',
                 maintenanceAllocation: 10,
                 charityAllocation: 5,
-                status: "completed"
+                status: "completed",
+                paymentMethod: "PhonePe/UPI"
             };
             
             // Save to Realtime Database
-            database.ref('registrations/' + paymentId).set(registrationData)
+            database.ref('payments/' + referenceId).set(paymentData)
                 .then(() => {
-                    console.log("Registration saved to Firebase");
+                    console.log("Payment saved to Firebase");
                 })
                 .catch((error) => {
-                    console.error("Error saving registration: ", error);
-                });
-                
-            // Also update Firestore
-            firestore.collection("registrations").doc(paymentId).set(registrationData)
-                .then(() => {
-                    console.log("Registration saved to Firestore");
-                })
-                .catch((error) => {
-                    console.error("Error saving to Firestore: ", error);
-                });
-        }
-
-        /* --- THREE.JS BACKGROUND (from Version 1, with rotation speed from Version 2) --- */
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-
-        // Create starfield
-        const starsGeometry = new THREE.BufferGeometry();
-        const starsCount = 5000;
-        const positions = new Float32Array(starsCount * 3);
-        
-        for(let i = 0; i < starsCount * 3; i++) { 
-            positions[i] = (Math.random() - 0.5) * 2000; 
-        }
-        
-        starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const starsMaterial = new THREE.PointsMaterial({ 
-            color: 0x00ff99, 
-            size: 0.7 
-        });
-        
-        const starField = new THREE.Points(starsGeometry, starsMaterial);
-        scene.add(starField);
-        camera.position.z = 1;
-
-        /* --- 3D FLOATING CHARITY BANNER --- */
-        // 1. Create Canvas for Text
-        const bannerCanvas = document.createElement('canvas');
-        const ctx = bannerCanvas.getContext('2d');
-        bannerCanvas.width = 1024;
-        bannerCanvas.height = 256;
-
-        // 2. Draw the Sovereign Message
-        ctx.fillStyle = 'rgba(0, 255, 153, 0.1)'; // Transparent Green
-        ctx.fillRect(0, 0, bannerCanvas.width, bannerCanvas.height);
-        ctx.strokeStyle = '#00ff99';
-        ctx.lineWidth = 10;
-        ctx.strokeRect(0, 0, bannerCanvas.width, bannerCanvas.height);
-
-        ctx.fillStyle = '#00ff99';
-        ctx.font = 'Bold 60px Courier New';
-        ctx.textAlign = 'center';
-        ctx.fillText('💚 CANCER & ORPHAN FUND 💚', 512, 110);
-        ctx.font = '30px Courier New';
-        ctx.fillText('MISSION: GUINNESS WORLD RECORD', 512, 180);
-
-        // 3. Create 3D Material
-        const bannerTexture = new THREE.CanvasTexture(bannerCanvas);
-        
-        // Calculate banner size based on screen width for mobile responsiveness
-        const isMobile = window.innerWidth <= 768;
-        const bannerWidth = isMobile ? 1.5 : 2; // Smaller on mobile
-        const bannerHeight = isMobile ? 0.4 : 0.5; // Smaller on mobile
-        
-        const bannerGeo = new THREE.PlaneGeometry(bannerWidth, bannerHeight);
-        const bannerMat = new THREE.MeshBasicMaterial({ 
-            map: bannerTexture, 
-            transparent: true, 
-            opacity: 0.8,
-            side: THREE.DoubleSide 
-        });
-
-        const charityBanner = new THREE.Mesh(bannerGeo, bannerMat);
-        scene.add(charityBanner);
-
-        // Position it based on device type
-        if (isMobile) {
-            // Move banner lower and slightly back on mobile to avoid overlap
-            charityBanner.position.set(0, -0.8, -3); // Lower position on mobile
-        } else {
-            // Original position for desktop
-            charityBanner.position.set(0, 1.2, -2);
-        }
-
-        // Animation function with floating banner
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            // Rotate Starfield (using starField from original code)
-            starField.rotation.y += 0.0008; // Using rotation speed from Version 2
-
-            // Make Banner Float Gently
-            const currentTime = Date.now() * 0.002;
-            charityBanner.position.y = (isMobile ? -0.8 : 1.2) + Math.sin(currentTime) * 0.05;
-            charityBanner.rotation.y = Math.sin(currentTime * 0.5) * 0.1;
-
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Handle window resize
-        function handleResize() {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            
-            // Update camera
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-            renderer.setSize(width, height);
-            
-            // Update banner position/size if switching between mobile/desktop
-            const newIsMobile = width <= 768;
-            if (newIsMobile !== isMobile) {
-                // Adjust banner position
-                if (newIsMobile) {
-                    charityBanner.position.set(0, -0.8, -3);
-                    charityBanner.scale.set(0.75, 0.75, 0.75); // Scale down for mobile
-                } else {
-                    charityBanner.position.set(0, 1.2, -2);
-                    charityBanner.scale.set(1, 1, 1); // Reset scale for desktop
-                }
-            }
-        }
-        
-        window.addEventListener('resize', handleResize);
-
-        /* --- INITIALIZE COUNTER ON LOAD --- */
-        window.onload = function() {
-            initCounter();
-        };
-    </script>
-</body>
-</html>
+                    console.error("E
