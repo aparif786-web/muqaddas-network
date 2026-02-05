@@ -51,6 +51,7 @@
             width: 90%;
             max-width: 420px;
             box-shadow: 0 0 25px rgba(0, 255, 153, 0.3);
+            z-index: 1;
         }
 
         .registration-box h1 {
@@ -136,6 +137,24 @@
             color: #00ff99;
             cursor: pointer;
             text-decoration: underline;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .registration-box {
+                padding: 25px 20px;
+                max-width: 90%;
+            }
+            
+            #charity-counter {
+                font-size: 16px;
+                top: 10px;
+                left: 10px;
+            }
+            
+            .registration-box h1 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -381,7 +400,13 @@
 
         // 3. Create 3D Material
         const bannerTexture = new THREE.CanvasTexture(bannerCanvas);
-        const bannerGeo = new THREE.PlaneGeometry(2, 0.5);
+        
+        // Calculate banner size based on screen width for mobile responsiveness
+        const isMobile = window.innerWidth <= 768;
+        const bannerWidth = isMobile ? 1.5 : 2; // Smaller on mobile
+        const bannerHeight = isMobile ? 0.4 : 0.5; // Smaller on mobile
+        
+        const bannerGeo = new THREE.PlaneGeometry(bannerWidth, bannerHeight);
         const bannerMat = new THREE.MeshBasicMaterial({ 
             map: bannerTexture, 
             transparent: true, 
@@ -392,8 +417,14 @@
         const charityBanner = new THREE.Mesh(bannerGeo, bannerMat);
         scene.add(charityBanner);
 
-        // Position it slightly away from the center
-        charityBanner.position.set(0, 1.2, -2); 
+        // Position it based on device type
+        if (isMobile) {
+            // Move banner lower and slightly back on mobile to avoid overlap
+            charityBanner.position.set(0, -0.8, -3); // Lower position on mobile
+        } else {
+            // Original position for desktop
+            charityBanner.position.set(0, 1.2, -2);
+        }
 
         // Animation function with floating banner
         function animate() {
@@ -403,19 +434,39 @@
             starField.rotation.y += 0.0008; // Using rotation speed from Version 2
 
             // Make Banner Float Gently
-            charityBanner.position.y = 1.2 + Math.sin(Date.now() * 0.002) * 0.05;
-            charityBanner.rotation.y = Math.sin(Date.now() * 0.001) * 0.1;
+            const currentTime = Date.now() * 0.002;
+            charityBanner.position.y = (isMobile ? -0.8 : 1.2) + Math.sin(currentTime) * 0.05;
+            charityBanner.rotation.y = Math.sin(currentTime * 0.5) * 0.1;
 
             renderer.render(scene, camera);
         }
         animate();
 
         // Handle window resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
+        function handleResize() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            // Update camera
+            camera.aspect = width / height;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+            renderer.setSize(width, height);
+            
+            // Update banner position/size if switching between mobile/desktop
+            const newIsMobile = width <= 768;
+            if (newIsMobile !== isMobile) {
+                // Adjust banner position
+                if (newIsMobile) {
+                    charityBanner.position.set(0, -0.8, -3);
+                    charityBanner.scale.set(0.75, 0.75, 0.75); // Scale down for mobile
+                } else {
+                    charityBanner.position.set(0, 1.2, -2);
+                    charityBanner.scale.set(1, 1, 1); // Reset scale for desktop
+                }
+            }
+        }
+        
+        window.addEventListener('resize', handleResize);
 
         /* --- INITIALIZE COUNTER ON LOAD --- */
         window.onload = function() {
