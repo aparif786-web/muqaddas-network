@@ -72,6 +72,85 @@
             color: #000;
         }
 
+        /* Free registration button */
+        .free-btn {
+            background: transparent;
+            color: #00ff99;
+            border: 2px solid #00ff99;
+        }
+
+        .free-btn:hover {
+            background: rgba(0, 255, 153, 0.1);
+            color: #00ff99;
+        }
+
+        /* Registration Options */
+        .registration-options {
+            margin: 20px 0;
+        }
+
+        .option-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #00aa55;
+            color: white;
+        }
+
+        .tab-btn:not(.active):hover {
+            background: rgba(0, 255, 153, 0.1);
+        }
+
+        /* Free registration form */
+        .free-registration-form {
+            display: none;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ff99;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 153, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #00ff99;
+            box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
+        }
+
         /* Full Screen Payment Container - SIMPLE VERSION */
         #paymentContainer {
             display: none;
@@ -255,6 +334,69 @@
             background: rgba(0, 255, 153, 0.3);
         }
 
+        /* Download APK Modal */
+        .download-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2001;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .download-content {
+            background: linear-gradient(135deg, #001a00 0%, #000 100%);
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #00ff99;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0, 255, 153, 0.3);
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .download-btn {
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+
+        .download-yes {
+            background: #00aa55;
+            color: white;
+            border: none;
+        }
+
+        .download-yes:hover {
+            background: #00ff99;
+            color: #000;
+        }
+
+        .download-no {
+            background: transparent;
+            color: #ff4444;
+            border: 2px solid #ff4444;
+        }
+
+        .download-no:hover {
+            background: rgba(255, 68, 68, 0.1);
+        }
+
         /* Mobile Responsive */
         @media (max-width: 480px) {
             .qr-simple-box {
@@ -289,6 +431,21 @@
                 min-width: 80px;
                 font-size: 13px;
                 padding: 8px 10px;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .tab-btn {
+                padding: 10px;
+                font-size: 14px;
             }
         }
 
@@ -336,14 +493,53 @@
         </p>
         <p><strong>Global Charity Mission</strong></p>
         <p>Join hands to help humanity worldwide.</p>
-        <p><strong>Registration Fee:</strong> ₹15 / $1 USD</p>
+        
+        <!-- Registration Options Tabs -->
+        <div class="registration-options">
+            <div class="option-tabs">
+                <button class="tab-btn active" onclick="switchTab('paid')">Register with Payment</button>
+                <button class="tab-btn" onclick="switchTab('free')">Register for Free</button>
+            </div>
+            
+            <!-- Paid Registration (Existing) -->
+            <div id="paidRegistration" class="registration-content">
+                <p><strong>Registration Fee:</strong> ₹15 / $1 USD</p>
+                
+                <div style="margin: 20px 0;">
+                    <input type="checkbox" id="legalAgree" style="margin-right: 8px;">
+                    <label for="legalAgree">I accept the <a href="javascript:void(0)" onclick="showLegal()" style="color:#00ff99;text-decoration:underline;">Legal Agreement</a></label>
+                </div>
 
-        <div style="margin: 20px 0;">
-            <input type="checkbox" id="legalAgree" style="margin-right: 8px;">
-            <label for="legalAgree">I accept the <a href="javascript:void(0)" onclick="showLegal()" style="color:#00ff99;text-decoration:underline;">Legal Agreement</a></label>
+                <button onclick="handlePaidRegister()">Register Now (₹15)</button>
+            </div>
+            
+            <!-- Free Registration Form -->
+            <div id="freeRegistration" class="free-registration-form">
+                <p style="color: #00ff99; margin-bottom: 15px;">Fill basic details for free registration:</p>
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number (Optional)</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number">
+                </div>
+                
+                <div class="form-group">
+                    <input type="checkbox" id="freeLegalAgree" style="margin-right: 8px;">
+                    <label for="freeLegalAgree">I accept the <a href="javascript:void(0)" onclick="showLegal()" style="color:#00ff99;text-decoration:underline;">Legal Agreement</a></label>
+                </div>
+                
+                <button onclick="handleFreeRegister()" class="free-btn">Complete Free Registration</button>
+            </div>
         </div>
-
-        <button onclick="handleRegister()">Register Now</button>
         
         <div style="margin-top: 20px; font-size: 14px; color: #ccc;">
             <p>100% Secure Payment • Instant Registration</p>
@@ -363,6 +559,32 @@
                 <p><strong>5. Mission:</strong> Supporting Guinness World Record attempt for humanity.</p>
             </div>
             <button onclick="hideModal('legalModal')" style="margin-top:20px;">I Understand & Agree</button>
+        </div>
+    </div>
+
+    <!-- Download APK Modal -->
+    <div id="downloadModal" class="download-modal">
+        <div class="download-content">
+            <h2 style="color:#00ff99;">Registration Successful! 🎉</h2>
+            <p style="color:#ffcc00; font-size: 20px; margin: 10px 0;">Welcome to Muqaddas Network 💚</p>
+            
+            <div style="background: rgba(0,255,153,0.1); padding: 20px; border-radius: 10px; margin: 20px 0; border: 1px solid #00ff99;">
+                <p style="color:#00ff99; font-weight: bold; margin: 10px 0;">Download our official app:</p>
+                <p style="color:#ccc; font-size: 14px; margin: 5px 0;">Get full access to network features</p>
+                <p style="color:#ffcc00; font-size: 12px; margin-top: 10px;">APK Size: ~25 MB</p>
+            </div>
+            
+            <p style="color:#fff; margin: 20px 0;">Would you like to download the Muqaddas Network app now?</p>
+            
+            <div class="download-buttons">
+                <button class="download-btn download-yes" onclick="downloadAPK()">Yes, Download Now</button>
+                <button class="download-btn download-no" onclick="closeDownloadModal()">Maybe Later</button>
+            </div>
+            
+            <p style="color:#999; font-size: 12px; margin-top: 20px;">
+                You can download it anytime from: <br>
+                <span style="color:#00ff99;">https://expo.dev/artifacts/eas/tryyhLkLD1dp3PQAWKwy8o.apk</span>
+            </p>
         </div>
     </div>
 
@@ -417,6 +639,32 @@
         let charityCount = parseInt(localStorage.getItem('charityCount')) || 0;
         document.getElementById('count').textContent = charityCount;
         
+        // Switch between paid and free registration tabs
+        function switchTab(tab) {
+            const paidTab = document.querySelector('.tab-btn:nth-child(1)');
+            const freeTab = document.querySelector('.tab-btn:nth-child(2)');
+            const paidContent = document.getElementById('paidRegistration');
+            const freeContent = document.getElementById('freeRegistration');
+            
+            if (tab === 'paid') {
+                paidTab.classList.add('active');
+                freeTab.classList.remove('active');
+                paidContent.style.display = 'block';
+                freeContent.style.display = 'none';
+            } else {
+                paidTab.classList.remove('active');
+                freeTab.classList.add('active');
+                paidContent.style.display = 'none';
+                freeContent.style.display = 'block';
+            }
+        }
+        
+        // Initialize with paid registration visible
+        window.onload = function() {
+            switchTab('paid');
+            initThreeJS();
+        };
+        
         // Modal functions
         function showLegal() {
             document.getElementById('legalModal').style.display = 'block';
@@ -424,6 +672,39 @@
         
         function hideModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Show download modal
+        function showDownloadModal() {
+            document.getElementById('downloadModal').style.display = 'block';
+        }
+        
+        // Close download modal
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').style.display = 'none';
+            alert("Thank you for registering! You can download the app anytime from the link provided.");
+        }
+        
+        // Download APK
+        function downloadAPK() {
+            const apkUrl = "https://expo.dev/artifacts/eas/tryyhLkLD1dp3PQAWKwy8o.apk";
+            
+            // Create download link
+            const downloadLink = document.createElement('a');
+            downloadLink.href = apkUrl;
+            downloadLink.download = 'MuqaddasNetwork.apk';
+            downloadLink.target = '_blank';
+            
+            // Trigger download
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            
+            // Close modal after download starts
+            setTimeout(() => {
+                document.getElementById('downloadModal').style.display = 'none';
+                alert("✅ Download started! Welcome to Muqaddas Network 💚");
+            }, 1000);
         }
         
         // Close payment container
@@ -434,15 +715,71 @@
             document.getElementById('processingStatus').style.display = 'block';
         }
         
-        // Registration handler
-        function handleRegister() {
-            const agree = document.getElementById('legalAgree');
-            if (!agree.checked) {
+        // Free Registration handler
+        function handleFreeRegister() {
+            const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const agree = document.getElementById('freeLegalAgree').checked;
+            
+            // Validation
+            if (!name) {
+                alert("Please enter your full name");
+                document.getElementById('fullName').focus();
+                return;
+            }
+            
+            if (!email) {
+                alert("Please enter your email address");
+                document.getElementById('email').focus();
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address");
+                document.getElementById('email').focus();
+                return;
+            }
+            
+            if (!agree) {
                 alert("Please accept the Legal Agreement first");
                 return;
             }
             
-            console.log("Registration started - opening full screen payment");
+            console.log("Free registration started");
+            
+            // Update charity counter
+            charityCount++;
+            document.getElementById('count').textContent = charityCount;
+            localStorage.setItem('charityCount', charityCount);
+            
+            // Save registration data (in real app, this would go to backend)
+            const registrationData = {
+                name: name,
+                email: email,
+                phone: document.getElementById('phone').value.trim() || 'Not provided',
+                type: 'free',
+                date: new Date().toISOString()
+            };
+            
+            localStorage.setItem('muqaddasRegistration', JSON.stringify(registrationData));
+            
+            // Show success message and download modal
+            setTimeout(() => {
+                showDownloadModal();
+            }, 500);
+        }
+        
+        // Paid Registration handler (existing functionality)
+        function handlePaidRegister() {
+            const agree = document.getElementById('legalAgree').checked;
+            if (!agree) {
+                alert("Please accept the Legal Agreement first");
+                return;
+            }
+            
+            console.log("Paid registration started - opening full screen payment");
             
             // Show full screen payment container
             document.getElementById('paymentContainer').style.display = 'block';
@@ -653,18 +990,20 @@
                 document.getElementById('count').textContent = charityCount;
                 localStorage.setItem('charityCount', charityCount);
                 
-                // Show success and close after 3 seconds
+                // Save paid registration data
+                const registrationData = {
+                    name: 'Paid Registration',
+                    type: 'paid',
+                    amount: 15,
+                    date: new Date().toISOString()
+                };
+                
+                localStorage.setItem('muqaddasRegistration', JSON.stringify(registrationData));
+                
+                // Show success and download modal after 3 seconds
                 setTimeout(() => {
                     closePayment();
-                    
-                    alert(
-                        "✅ REGISTRATION SUCCESSFUL! 💚\n\n" +
-                        "Thank you for joining the Muqaddas Network!\n\n" +
-                        "Your Contribution:\n" +
-                        "₹10 → Maintenance & Tech Development\n" +
-                        "₹5 → Direct Charity Fund\n\n" +
-                        "Welcome to the mission!"
-                    );
+                    showDownloadModal();
                 }, 3000);
             }, 2000);
         }
@@ -729,15 +1068,13 @@
             }
         }
         
-        // Initialize
-        window.onload = function() {
-            initThreeJS();
-        };
-        
         // Close modal when clicking outside
         window.onclick = function(event) {
             if (event.target.id === 'legalModal') {
                 hideModal('legalModal');
+            }
+            if (event.target.id === 'downloadModal') {
+                closeDownloadModal();
             }
         };
     </script>
