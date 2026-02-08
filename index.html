@@ -89,23 +89,26 @@
             margin: 20px 0;
         }
 
+        /* Updated Tabs to include Education */
         .option-tabs {
             display: flex;
             margin-bottom: 20px;
             border-radius: 8px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.05);
+            gap: 2px;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px;
+            padding: 12px 5px;
             background: transparent;
             border: none;
             color: #ccc;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             transition: all 0.3s;
+            font-weight: bold;
         }
 
         .tab-btn.active {
@@ -117,9 +120,17 @@
             background: rgba(0, 255, 153, 0.1);
         }
 
+        /* Tab content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         /* Free registration form */
         .free-registration-form {
-            display: none;
             text-align: left;
             margin-top: 20px;
         }
@@ -135,7 +146,7 @@
             font-size: 14px;
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 12px;
             border-radius: 8px;
@@ -145,13 +156,61 @@
             box-sizing: border-box;
         }
 
-        .form-group input:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: #00ff99;
             box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
         }
 
-        /* Full Screen Payment Container - SIMPLE VERSION */
+        /* Education/Learning Section Styles from Code 2 */
+        .education-form {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .learning-card {
+            background: rgba(0, 255, 153, 0.05);
+            border: 1px solid rgba(0, 255, 153, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .level-bar {
+            width: 100%;
+            height: 10px;
+            background: #222;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .level-progress {
+            width: 20%; /* Initial Level */
+            height: 100%;
+            background: linear-gradient(90deg, #00aa55, #00ff99);
+            box-shadow: 0 0 10px #00ff99;
+            transition: width 0.5s ease;
+        }
+
+        .guitar-royalty-box {
+            border: 1px dashed #ffcc00;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            background: rgba(255, 204, 0, 0.05);
+        }
+
+        .royalty-badge {
+            background: #ffcc00;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Full Screen Payment Container - ORIGINAL FROM CODE 1 */
         #paymentContainer {
             display: none;
             position: fixed;
@@ -494,15 +553,16 @@
         <p><strong>Global Charity Mission</strong></p>
         <p>Join hands to help humanity worldwide.</p>
         
-        <!-- Registration Options Tabs -->
+        <!-- Registration Options Tabs - UPDATED WITH EDUCATION -->
         <div class="registration-options">
             <div class="option-tabs">
-                <button class="tab-btn active" onclick="switchTab('paid')">Register with Payment</button>
-                <button class="tab-btn" onclick="switchTab('free')">Register for Free</button>
+                <button class="tab-btn active" onclick="switchTab('paid')">Paid Register</button>
+                <button class="tab-btn" onclick="switchTab('free')">Free Register</button>
+                <button class="tab-btn" onclick="switchTab('education')">Gyan Sultanat 🎓</button>
             </div>
             
-            <!-- Paid Registration (Existing) -->
-            <div id="paidRegistration" class="registration-content">
+            <!-- Paid Registration (Original from Code 1) -->
+            <div id="paidRegistration" class="tab-content active">
                 <p><strong>Registration Fee:</strong> ₹15 / $1 USD</p>
                 
                 <div style="margin: 20px 0;">
@@ -513,8 +573,8 @@
                 <button onclick="handlePaidRegister()">Register Now (₹15)</button>
             </div>
             
-            <!-- Free Registration Form -->
-            <div id="freeRegistration" class="free-registration-form">
+            <!-- Free Registration Form (Original from Code 1) -->
+            <div id="freeRegistration" class="tab-content free-registration-form">
                 <p style="color: #00ff99; margin-bottom: 15px;">Fill basic details for free registration:</p>
                 
                 <div class="form-group">
@@ -539,6 +599,32 @@
                 
                 <button onclick="handleFreeRegister()" class="free-btn">Complete Free Registration</button>
             </div>
+            
+            <!-- Education Registration (From Code 2) -->
+            <div id="educationRegistration" class="tab-content education-form">
+                <div class="learning-card">
+                    <label style="font-size: 13px; color: #00ff99;">Student Progression (Hidden Level)</label>
+                    <div class="level-bar"><div class="level-progress" id="studentProgress"></div></div>
+                    <p id="levelText" style="font-size: 11px; margin: 0; color: #ccc;">Level 1: New Seeker</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="eduStream">Select Learning Stream</label>
+                    <select id="eduStream">
+                        <option value="tech">Muqaddas Technology</option>
+                        <option value="music">Music & Guitar Mastery</option>
+                        <option value="business">Visionary Business Logic</option>
+                    </select>
+                </div>
+
+                <div class="guitar-royalty-box">
+                    <p style="font-size: 13px; margin: 0; color: #ffcc00;">🎸 <strong>Guitar File Property</strong></p>
+                    <p style="font-size: 11px; color: #aaa;">Your learning data is secured as personal property for future royalties.</p>
+                    <span class="royalty-badge">ROYALTY ENABLED</span>
+                </div>
+
+                <button onclick="handleEduRegister()" style="background:#ffcc00; color:#000;">Enroll in Academy</button>
+            </div>
         </div>
         
         <div style="margin-top: 20px; font-size: 14px; color: #ccc;">
@@ -546,7 +632,7 @@
         </div>
     </div>
 
-    <!-- Legal Modal -->
+    <!-- Legal Modal (Original from Code 1) -->
     <div id="legalModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; padding:20px; box-sizing:border-box;">
         <div style="background:#111; max-width:500px; margin:50px auto; padding:30px; border-radius:12px; border:2px solid #00ff99; text-align:center;">
             <span onclick="hideModal('legalModal')" style="float:right; color:#00ff99; font-size:28px; cursor:pointer; padding:0 10px;">&times;</span>
@@ -562,7 +648,7 @@
         </div>
     </div>
 
-    <!-- Download APK Modal -->
+    <!-- Download APK Modal (Original from Code 1) -->
     <div id="downloadModal" class="download-modal">
         <div class="download-content">
             <h2 style="color:#00ff99;">Registration Successful! 🎉</h2>
@@ -588,7 +674,7 @@
         </div>
     </div>
 
-    <!-- Full Screen Payment Container - SIMPLE VERSION -->
+    <!-- Full Screen Payment Container - ORIGINAL FROM CODE 1 -->
     <div id="paymentContainer">
         <div class="close-payment" onclick="closePayment()">×</div>
         
@@ -639,24 +725,18 @@
         let charityCount = parseInt(localStorage.getItem('charityCount')) || 0;
         document.getElementById('count').textContent = charityCount;
         
-        // Switch between paid and free registration tabs
+        // Switch between tabs (updated to include education)
         function switchTab(tab) {
-            const paidTab = document.querySelector('.tab-btn:nth-child(1)');
-            const freeTab = document.querySelector('.tab-btn:nth-child(2)');
-            const paidContent = document.getElementById('paidRegistration');
-            const freeContent = document.getElementById('freeRegistration');
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
             
-            if (tab === 'paid') {
-                paidTab.classList.add('active');
-                freeTab.classList.remove('active');
-                paidContent.style.display = 'block';
-                freeContent.style.display = 'none';
-            } else {
-                paidTab.classList.remove('active');
-                freeTab.classList.add('active');
-                paidContent.style.display = 'none';
-                freeContent.style.display = 'block';
-            }
+            // Remove active class from all
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            // Add active class to selected
+            document.querySelector(`.tab-btn:nth-child(${tab === 'paid' ? 1 : tab === 'free' ? 2 : 3})`).classList.add('active');
+            document.getElementById(`${tab}Registration`).classList.add('active');
         }
         
         // Initialize with paid registration visible
@@ -665,7 +745,7 @@
             initThreeJS();
         };
         
-        // Modal functions
+        // Modal functions (original from code 1)
         function showLegal() {
             document.getElementById('legalModal').style.display = 'block';
         }
@@ -674,18 +754,18 @@
             document.getElementById(modalId).style.display = 'none';
         }
         
-        // Show download modal
+        // Show download modal (original from code 1)
         function showDownloadModal() {
             document.getElementById('downloadModal').style.display = 'block';
         }
         
-        // Close download modal
+        // Close download modal (original from code 1)
         function closeDownloadModal() {
             document.getElementById('downloadModal').style.display = 'none';
             alert("Thank you for registering! You can download the app anytime from the link provided.");
         }
         
-        // Download APK
+        // Download APK (original from code 1)
         function downloadAPK() {
             const apkUrl = "https://expo.dev/artifacts/eas/tryyhLkLD1dp3PQAWKwy8o.apk";
             
@@ -707,7 +787,7 @@
             }, 1000);
         }
         
-        // Close payment container
+        // Close payment container (original from code 1)
         function closePayment() {
             document.getElementById('paymentContainer').style.display = 'none';
             document.getElementById('paymentStatus').style.display = 'none';
@@ -715,7 +795,35 @@
             document.getElementById('processingStatus').style.display = 'block';
         }
         
-        // Free Registration handler
+        // Education Registration handler (from code 2)
+        function handleEduRegister() {
+            const stream = document.getElementById('eduStream').value;
+            
+            // Save student data
+            const studentData = { 
+                stream: stream, 
+                level: 1, 
+                date: new Date().toISOString(),
+                type: 'education'
+            };
+            
+            localStorage.setItem('muqaddasStudent', JSON.stringify(studentData));
+            
+            // Visual feedback
+            document.getElementById('studentProgress').style.width = "45%";
+            document.getElementById('levelText').textContent = "Level 1 Locked - Enrollment Verified";
+            
+            // Update charity counter
+            charityCount++;
+            document.getElementById('count').textContent = charityCount;
+            localStorage.setItem('charityCount', charityCount);
+            
+            setTimeout(() => { 
+                showDownloadModal(); 
+            }, 1000);
+        }
+        
+        // Free Registration handler (original from code 1)
         function handleFreeRegister() {
             const name = document.getElementById('fullName').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -754,7 +862,7 @@
             document.getElementById('count').textContent = charityCount;
             localStorage.setItem('charityCount', charityCount);
             
-            // Save registration data (in real app, this would go to backend)
+            // Save registration data
             const registrationData = {
                 name: name,
                 email: email,
@@ -771,7 +879,7 @@
             }, 500);
         }
         
-        // Paid Registration handler (existing functionality)
+        // Paid Registration handler (original from code 1)
         function handlePaidRegister() {
             const agree = document.getElementById('legalAgree').checked;
             if (!agree) {
@@ -791,7 +899,7 @@
             startPaymentSimulation();
         }
         
-        // Generate QR code with multiple fallback methods
+        // Generate QR code with multiple fallback methods (original from code 1)
         function generateQRWithFallback() {
             const upiId = '7638082406@ptsbi';
             const amount = '15';
@@ -811,7 +919,7 @@
             tryAllQRApis(upiUrl, qrContainer);
         }
         
-        // Try multiple QR code APIs
+        // Try multiple QR code APIs (original from code 1)
         function tryAllQRApis(upiUrl, qrContainer) {
             const qrSize = 200;
             const apis = [
@@ -864,7 +972,7 @@
             tryNextApi();
         }
         
-        // Create manual QR as fallback
+        // Create manual QR as fallback (original from code 1)
         function createManualQR(qrContainer, upiUrl) {
             qrContainer.innerHTML = `
                 <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 8px;">
@@ -894,7 +1002,7 @@
             `;
         }
         
-        // Open specific UPI app
+        // Open specific UPI app (original from code 1)
         function openSpecificApp(appName) {
             const upiId = '7638082406@ptsbi';
             const amount = '15';
@@ -927,7 +1035,7 @@
             }
         }
         
-        // Open UPI App (generic)
+        // Open UPI App (generic) (original from code 1)
         function openUPIApp() {
             const upiId = 'arif.ullah2@ybl';
             const amount = '15';
@@ -967,7 +1075,7 @@
             }, 1500);
         }
         
-        // Start payment simulation
+        // Start payment simulation (original from code 1)
         function startPaymentSimulation() {
             // Auto-simulate payment after 30 seconds if user hasn't clicked anything
             setTimeout(() => {
@@ -977,7 +1085,7 @@
             }, 30000);
         }
         
-        // Simulate payment success
+        // Simulate payment success (original from code 1)
         function simulatePaymentSuccess() {
             document.getElementById('processingStatus').innerHTML = '<div style="color: #ffcc00;">Verifying payment... <div class="spinner" style="display: inline-block; width: 12px; height: 12px; border: 2px solid #ffcc00; border-radius: 50%; border-top-color: transparent; animation: spin 1s linear infinite;"></div></div>';
             
@@ -1018,7 +1126,7 @@
         `;
         document.head.appendChild(style);
         
-        // Three.js Background - Simplified
+        // Three.js Background - Original from Code 1
         function initThreeJS() {
             try {
                 const scene = new THREE.Scene();
