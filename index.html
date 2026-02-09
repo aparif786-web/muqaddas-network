@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Muqaddas Network 💚 | Global Charity Mission</title>
+    <title>Gyan Sultanat 🎓 | Learning Platform</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Load Three.js -->
@@ -22,19 +22,6 @@
             top: 0;
             left: 0;
             z-index: -1;
-        }
-
-        #charity-counter {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            font-size: 20px;
-            color: #00ff99;
-            font-weight: bold;
-            z-index: 10;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 8px 12px;
-            border-radius: 5px;
         }
 
         .registration-box {
@@ -72,69 +59,55 @@
             color: #000;
         }
 
-        /* Free registration button */
-        .free-btn {
-            background: transparent;
-            color: #00ff99;
-            border: 2px solid #00ff99;
+        /* Education/Learning Section */
+        .education-form {
+            text-align: left;
+            margin-top: 10px;
         }
 
-        .free-btn:hover {
-            background: rgba(0, 255, 153, 0.1);
-            color: #00ff99;
-        }
-
-        /* Registration Options */
-        .registration-options {
-            margin: 20px 0;
-        }
-
-        /* Updated Tabs to include Education */
-        .option-tabs {
-            display: flex;
-            margin-bottom: 20px;
+        .learning-card {
+            background: rgba(0, 255, 153, 0.05);
+            border: 1px solid rgba(0, 255, 153, 0.2);
             border-radius: 8px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.05);
-            gap: 2px;
+            padding: 12px;
+            margin-bottom: 15px;
         }
 
-        .tab-btn {
-            flex: 1;
-            padding: 12px 5px;
-            background: transparent;
-            border: none;
-            color: #ccc;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
+        .level-bar {
+            width: 100%;
+            height: 10px;
+            background: #222;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .level-progress {
+            width: 20%;
+            height: 100%;
+            background: linear-gradient(90deg, #00aa55, #00ff99);
+            box-shadow: 0 0 10px #00ff99;
+            transition: width 0.5s ease;
+        }
+
+        .guitar-royalty-box {
+            border: 1px dashed #ffcc00;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            background: rgba(255, 204, 0, 0.05);
+        }
+
+        .royalty-badge {
+            background: #ffcc00;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
             font-weight: bold;
         }
 
-        .tab-btn.active {
-            background: #00aa55;
-            color: white;
-        }
-
-        .tab-btn:not(.active):hover {
-            background: rgba(0, 255, 153, 0.1);
-        }
-
-        /* Tab content */
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Free registration form */
-        .free-registration-form {
-            text-align: left;
-            margin-top: 20px;
-        }
-
+        /* Form styles */
         .form-group {
             margin-bottom: 15px;
         }
@@ -162,238 +135,7 @@
             box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
         }
 
-        /* Education/Learning Section Styles from Code 2 */
-        .education-form {
-            text-align: left;
-            margin-top: 10px;
-        }
-
-        .learning-card {
-            background: rgba(0, 255, 153, 0.05);
-            border: 1px solid rgba(0, 255, 153, 0.2);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 15px;
-        }
-
-        .level-bar {
-            width: 100%;
-            height: 10px;
-            background: #222;
-            border-radius: 5px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-
-        .level-progress {
-            width: 20%; /* Initial Level */
-            height: 100%;
-            background: linear-gradient(90deg, #00aa55, #00ff99);
-            box-shadow: 0 0 10px #00ff99;
-            transition: width 0.5s ease;
-        }
-
-        .guitar-royalty-box {
-            border: 1px dashed #ffcc00;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px;
-            background: rgba(255, 204, 0, 0.05);
-        }
-
-        .royalty-badge {
-            background: #ffcc00;
-            color: #000;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        /* Full Screen Payment Container - ORIGINAL FROM CODE 1 */
-        #paymentContainer {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #000000 0%, #001a00 100%);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .payment-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .payment-header {
-            margin-bottom: 30px;
-        }
-
-        .payment-header h2 {
-            color: #00ff99;
-            font-size: 28px;
-            margin: 10px 0;
-        }
-
-        .payment-header p {
-            color: #ffcc00;
-            font-size: 18px;
-        }
-
-        /* SIMPLE QR Code Box */
-        .qr-simple-box {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 300px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(0, 255, 153, 0.3);
-        }
-
-        #qrcode {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        #qrcode img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        .qr-instruction {
-            color: #000;
-            font-size: 16px;
-            margin-top: 15px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        /* SIMPLE UPI Button */
-        .upi-simple-button {
-            background: linear-gradient(135deg, #34C759 0%, #2ecc71 100%);
-            color: white;
-            border: none;
-            padding: 20px 30px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 20px;
-            width: 90%;
-            max-width: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: all 0.3s;
-            box-shadow: 0 8px 25px rgba(52, 199, 89, 0.4);
-        }
-
-        .upi-simple-button:hover {
-            background: linear-gradient(135deg, #30b352 0%, #27ae60 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(52, 199, 89, 0.6);
-        }
-
-        /* Close Button */
-        .close-payment {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            color: #00ff99;
-            font-size: 36px;
-            font-weight: bold;
-            cursor: pointer;
-            background: rgba(0,0,0,0.7);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1001;
-            border: 2px solid #00ff99;
-        }
-
-        .close-payment:hover {
-            color: #ffcc00;
-            border-color: #ffcc00;
-        }
-
-        /* Payment Status */
-        .payment-status {
-            background: rgba(0, 255, 153, 0.1);
-            border-radius: 10px;
-            border: 1px solid #00ff99;
-            padding: 15px;
-            margin-top: 20px;
-            width: 90%;
-            max-width: 300px;
-            display: none;
-            text-align: center;
-        }
-
-        .status-success {
-            color: #00ff99;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .status-processing {
-            color: #ffcc00;
-            font-size: 15px;
-        }
-
-        /* UPI App Options */
-        .upi-app-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-            width: 90%;
-            max-width: 400px;
-        }
-
-        .upi-app-button {
-            background: rgba(0, 255, 153, 0.1);
-            border: 1px solid #00ff99;
-            color: #00ff99;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            flex: 1;
-            min-width: 100px;
-        }
-
-        .upi-app-button:hover {
-            background: rgba(0, 255, 153, 0.3);
-        }
-
-        /* Download APK Modal */
+        /* Download Modal */
         .download-modal {
             display: none;
             position: fixed;
@@ -458,40 +200,10 @@
 
         /* Mobile Responsive */
         @media (max-width: 480px) {
-            .qr-simple-box {
-                padding: 15px;
-                max-width: 280px;
+            .registration-box {
+                padding: 20px;
             }
             
-            #qrcode {
-                width: 180px;
-                height: 180px;
-            }
-            
-            .qr-instruction {
-                font-size: 14px;
-            }
-            
-            .upi-simple-button {
-                padding: 18px 25px;
-                font-size: 18px;
-                max-width: 280px;
-            }
-            
-            .payment-header h2 {
-                font-size: 24px;
-            }
-            
-            .payment-header p {
-                font-size: 16px;
-            }
-            
-            .upi-app-button {
-                min-width: 80px;
-                font-size: 13px;
-                padding: 8px 10px;
-            }
-
             .download-buttons {
                 flex-direction: column;
                 align-items: center;
@@ -501,166 +213,82 @@
                 width: 100%;
                 max-width: 200px;
             }
-
-            .tab-btn {
-                padding: 10px;
-                font-size: 14px;
-            }
         }
 
         @media (max-width: 360px) {
-            .qr-simple-box {
-                padding: 12px;
-                max-width: 260px;
+            .download-content {
+                padding: 20px;
             }
             
-            #qrcode {
-                width: 160px;
-                height: 160px;
-            }
-            
-            .upi-simple-button {
-                padding: 16px 20px;
-                font-size: 17px;
-                max-width: 260px;
-            }
-            
-            .upi-app-options {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .upi-app-button {
-                width: 100%;
-                max-width: 200px;
+            .download-btn {
+                padding: 12px 20px;
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Charity Counter -->
-    <div id="charity-counter">
-        People Helped: <span id="count">0</span>
-    </div>
-
     <!-- Registration Box -->
     <div class="registration-box">
-        <h1 style="color:#00ff99; margin-bottom:10px;">Muqaddas Network 💚</h1>
-        <p style="color: #ffcc00; font-weight: bold; border: 1px solid #ffcc00; padding: 5px; border-radius: 5px; margin: 10px 0;">
-            🏆 Targeting Guinness World Record for Humanity
-        </p>
-        <p><strong>Global Charity Mission</strong></p>
-        <p>Join hands to help humanity worldwide.</p>
+        <h1 style="color:#00ff99; margin-bottom:10px;">Gyan Sultanat 🎓</h1>
+        <p><strong>Free Learning Platform</strong></p>
         
-        <!-- Registration Options Tabs - UPDATED WITH EDUCATION -->
-        <div class="registration-options">
-            <div class="option-tabs">
-                <button class="tab-btn active" onclick="switchTab('paid')">Paid Register</button>
-                <button class="tab-btn" onclick="switchTab('free')">Free Register</button>
-                <button class="tab-btn" onclick="switchTab('education')">Gyan Sultanat 🎓</button>
+        <!-- Education Registration -->
+        <div id="educationRegistration" class="education-form">
+            <div class="learning-card">
+                <label style="font-size: 13px; color: #00ff99;">Student Progression</label>
+                <div class="level-bar"><div class="level-progress" id="studentProgress"></div></div>
+                <p id="levelText" style="font-size: 11px; margin: 0; color: #ccc;">Level 1: New Learner</p>
+            </div>
+
+            <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" required>
             </div>
             
-            <!-- Paid Registration (Original from Code 1) -->
-            <div id="paidRegistration" class="tab-content active">
-                <p><strong>Registration Fee:</strong> ₹15 / $1 USD</p>
-                
-                <div style="margin: 20px 0;">
-                    <input type="checkbox" id="legalAgree" style="margin-right: 8px;">
-                    <label for="legalAgree">I accept the <a href="javascript:void(0)" onclick="showLegal()" style="color:#00ff99;text-decoration:underline;">Legal Agreement</a></label>
-                </div>
-
-                <button onclick="handlePaidRegister()">Register Now (₹15)</button>
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
             </div>
-            
-            <!-- Free Registration Form (Original from Code 1) -->
-            <div id="freeRegistration" class="tab-content free-registration-form">
-                <p style="color: #00ff99; margin-bottom: 15px;">Fill basic details for free registration:</p>
-                
-                <div class="form-group">
-                    <label for="fullName">Full Name *</label>
-                    <input type="text" id="fullName" placeholder="Enter your full name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address *</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Phone Number (Optional)</label>
-                    <input type="tel" id="phone" placeholder="Enter your phone number">
-                </div>
-                
-                <div class="form-group">
-                    <input type="checkbox" id="freeLegalAgree" style="margin-right: 8px;">
-                    <label for="freeLegalAgree">I accept the <a href="javascript:void(0)" onclick="showLegal()" style="color:#00ff99;text-decoration:underline;">Legal Agreement</a></label>
-                </div>
-                
-                <button onclick="handleFreeRegister()" class="free-btn">Complete Free Registration</button>
+
+            <div class="form-group">
+                <label for="eduStream">Select Learning Stream</label>
+                <select id="eduStream">
+                    <option value="tech">Technology & Coding</option>
+                    <option value="music">Music & Guitar</option>
+                    <option value="business">Business Skills</option>
+                    <option value="personal">Personal Development</option>
+                </select>
             </div>
-            
-            <!-- Education Registration (From Code 2) -->
-            <div id="educationRegistration" class="tab-content education-form">
-                <div class="learning-card">
-                    <label style="font-size: 13px; color: #00ff99;">Student Progression (Hidden Level)</label>
-                    <div class="level-bar"><div class="level-progress" id="studentProgress"></div></div>
-                    <p id="levelText" style="font-size: 11px; margin: 0; color: #ccc;">Level 1: New Seeker</p>
-                </div>
 
-                <div class="form-group">
-                    <label for="eduStream">Select Learning Stream</label>
-                    <select id="eduStream">
-                        <option value="tech">Muqaddas Technology</option>
-                        <option value="music">Music & Guitar Mastery</option>
-                        <option value="business">Visionary Business Logic</option>
-                    </select>
-                </div>
-
-                <div class="guitar-royalty-box">
-                    <p style="font-size: 13px; margin: 0; color: #ffcc00;">🎸 <strong>Guitar File Property</strong></p>
-                    <p style="font-size: 11px; color: #aaa;">Your learning data is secured as personal property for future royalties.</p>
-                    <span class="royalty-badge">ROYALTY ENABLED</span>
-                </div>
-
-                <button onclick="handleEduRegister()" style="background:#ffcc00; color:#000;">Enroll in Academy</button>
+            <div class="guitar-royalty-box">
+                <p style="font-size: 13px; margin: 0; color: #ffcc00;">🎸 <strong>Learning Property</strong></p>
+                <p style="font-size: 11px; color: #aaa;">Your learning progress is secured as personal property.</p>
+                <span class="royalty-badge">PROGRESS TRACKED</span>
             </div>
+
+            <button onclick="handleEduRegister()" style="background:#00ff99; color:#000;">Enroll for Free</button>
         </div>
         
         <div style="margin-top: 20px; font-size: 14px; color: #ccc;">
-            <p>100% Secure Payment • Instant Registration</p>
+            <p>100% Free • Instant Access</p>
         </div>
     </div>
 
-    <!-- Legal Modal (Original from Code 1) -->
-    <div id="legalModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; padding:20px; box-sizing:border-box;">
-        <div style="background:#111; max-width:500px; margin:50px auto; padding:30px; border-radius:12px; border:2px solid #00ff99; text-align:center;">
-            <span onclick="hideModal('legalModal')" style="float:right; color:#00ff99; font-size:28px; cursor:pointer; padding:0 10px;">&times;</span>
-            <h2 style="color:#00ff99;">Legal Agreement</h2>
-            <div style="max-height:300px; overflow-y:auto; padding:15px; background:rgba(0,0,0,0.3); border-radius:8px; margin:20px 0;">
-                <p><strong>1. Purpose:</strong> Charitable contribution to Muqaddas Network mission.</p>
-                <p><strong>2. Payment Allocation:</strong> ₹10 for Maintenance & Tech Development, ₹5 for Direct Charity.</p>
-                <p><strong>3. Non-refundable:</strong> This is a charitable donation.</p>
-                <p><strong>4. Privacy:</strong> Your data is secure and protected.</p>
-                <p><strong>5. Mission:</strong> Supporting Guinness World Record attempt for humanity.</p>
-            </div>
-            <button onclick="hideModal('legalModal')" style="margin-top:20px;">I Understand & Agree</button>
-        </div>
-    </div>
-
-    <!-- Download APK Modal (Original from Code 1) -->
+    <!-- Download APK Modal -->
     <div id="downloadModal" class="download-modal">
         <div class="download-content">
             <h2 style="color:#00ff99;">Registration Successful! 🎉</h2>
-            <p style="color:#ffcc00; font-size: 20px; margin: 10px 0;">Welcome to Muqaddas Network 💚</p>
+            <p style="color:#ffcc00; font-size: 20px; margin: 10px 0;">Welcome to Gyan Sultanat 🎓</p>
             
             <div style="background: rgba(0,255,153,0.1); padding: 20px; border-radius: 10px; margin: 20px 0; border: 1px solid #00ff99;">
-                <p style="color:#00ff99; font-weight: bold; margin: 10px 0;">Download our official app:</p>
-                <p style="color:#ccc; font-size: 14px; margin: 5px 0;">Get full access to network features</p>
+                <p style="color:#00ff99; font-weight: bold; margin: 10px 0;">Download our learning app:</p>
+                <p style="color:#ccc; font-size: 14px; margin: 5px 0;">Get full access to courses and materials</p>
                 <p style="color:#ffcc00; font-size: 12px; margin-top: 10px;">APK Size: ~25 MB</p>
             </div>
             
-            <p style="color:#fff; margin: 20px 0;">Would you like to download the Muqaddas Network app now?</p>
+            <p style="color:#fff; margin: 20px 0;">Would you like to download the Gyan Sultanat app now?</p>
             
             <div class="download-buttons">
                 <button class="download-btn download-yes" onclick="downloadAPK()">Yes, Download Now</button>
@@ -674,105 +302,31 @@
         </div>
     </div>
 
-    <!-- Full Screen Payment Container - ORIGINAL FROM CODE 1 -->
-    <div id="paymentContainer">
-        <div class="close-payment" onclick="closePayment()">×</div>
-        
-        <div class="payment-content">
-            <div class="payment-header">
-                <h2>Complete Your Payment</h2>
-                <p>Registration Fee: ₹15</p>
-            </div>
-            
-            <!-- SIMPLE QR Code Box -->
-            <div class="qr-simple-box">
-                <div id="qrcode">
-                    <!-- QR code will be inserted here as IMG -->
-                </div>
-                <p class="qr-instruction">Scan QR Code with any UPI App</p>
-                <p style="color: #666; font-size: 14px; margin-top: 5px;">UPI ID: 7638082406@ptsbi</p>
-            </div>
-            
-            <!-- SIMPLE UPI Button -->
-            <button class="upi-simple-button" onclick="openUPIApp()">
-                <span style="font-size: 24px;">📱</span>
-                Pay with UPI App
-            </button>
-            
-            <!-- UPI App Specific Buttons -->
-            <div class="upi-app-options">
-                <button class="upi-app-button" onclick="openSpecificApp('googlepay')">Google Pay</button>
-                <button class="upi-app-button" onclick="openSpecificApp('phonepe')">PhonePe</button>
-                <button class="upi-app-button" onclick="openSpecificApp('paytm')">Paytm</button>
-                <button class="upi-app-button" onclick="openSpecificApp('bhim')">BHIM</button>
-                <button class="upi-app-button" onclick="openSpecificApp('amazonpay')">Amazon Pay</button>
-            </div>
-            
-            <!-- Payment Status -->
-            <div class="payment-status" id="paymentStatus">
-                <div class="status-processing" id="processingStatus">
-                    Processing your payment...
-                </div>
-                <div class="status-success" id="successStatus" style="display:none;">
-                    ✅ Payment Successful! Registration Complete.
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Simple charity counter
-        let charityCount = parseInt(localStorage.getItem('charityCount')) || 0;
-        document.getElementById('count').textContent = charityCount;
-        
-        // Switch between tabs (updated to include education)
-        function switchTab(tab) {
-            const tabs = document.querySelectorAll('.tab-btn');
-            const contents = document.querySelectorAll('.tab-content');
-            
-            // Remove active class from all
-            tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-            
-            // Add active class to selected
-            document.querySelector(`.tab-btn:nth-child(${tab === 'paid' ? 1 : tab === 'free' ? 2 : 3})`).classList.add('active');
-            document.getElementById(`${tab}Registration`).classList.add('active');
-        }
-        
-        // Initialize with paid registration visible
+        // Initialize Three.js background
         window.onload = function() {
-            switchTab('paid');
             initThreeJS();
         };
         
-        // Modal functions (original from code 1)
-        function showLegal() {
-            document.getElementById('legalModal').style.display = 'block';
-        }
-        
-        function hideModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-        
-        // Show download modal (original from code 1)
+        // Show download modal
         function showDownloadModal() {
             document.getElementById('downloadModal').style.display = 'block';
         }
         
-        // Close download modal (original from code 1)
+        // Close download modal
         function closeDownloadModal() {
             document.getElementById('downloadModal').style.display = 'none';
             alert("Thank you for registering! You can download the app anytime from the link provided.");
         }
         
-        // Download APK (original from code 1)
+        // Download APK
         function downloadAPK() {
             const apkUrl = "https://expo.dev/artifacts/eas/tryyhLkLD1dp3PQAWKwy8o.apk";
             
             // Create download link
             const downloadLink = document.createElement('a');
             downloadLink.href = apkUrl;
-            downloadLink.download = 'MuqaddasNetwork.apk';
+            downloadLink.download = 'GyanSultanat.apk';
             downloadLink.target = '_blank';
             
             // Trigger download
@@ -783,51 +337,15 @@
             // Close modal after download starts
             setTimeout(() => {
                 document.getElementById('downloadModal').style.display = 'none';
-                alert("✅ Download started! Welcome to Muqaddas Network 💚");
+                alert("✅ Download started! Welcome to Gyan Sultanat 🎓");
             }, 1000);
         }
         
-        // Close payment container (original from code 1)
-        function closePayment() {
-            document.getElementById('paymentContainer').style.display = 'none';
-            document.getElementById('paymentStatus').style.display = 'none';
-            document.getElementById('successStatus').style.display = 'none';
-            document.getElementById('processingStatus').style.display = 'block';
-        }
-        
-        // Education Registration handler (from code 2)
+        // Education Registration handler
         function handleEduRegister() {
-            const stream = document.getElementById('eduStream').value;
-            
-            // Save student data
-            const studentData = { 
-                stream: stream, 
-                level: 1, 
-                date: new Date().toISOString(),
-                type: 'education'
-            };
-            
-            localStorage.setItem('muqaddasStudent', JSON.stringify(studentData));
-            
-            // Visual feedback
-            document.getElementById('studentProgress').style.width = "45%";
-            document.getElementById('levelText').textContent = "Level 1 Locked - Enrollment Verified";
-            
-            // Update charity counter
-            charityCount++;
-            document.getElementById('count').textContent = charityCount;
-            localStorage.setItem('charityCount', charityCount);
-            
-            setTimeout(() => { 
-                showDownloadModal(); 
-            }, 1000);
-        }
-        
-        // Free Registration handler (original from code 1)
-        function handleFreeRegister() {
             const name = document.getElementById('fullName').value.trim();
             const email = document.getElementById('email').value.trim();
-            const agree = document.getElementById('freeLegalAgree').checked;
+            const stream = document.getElementById('eduStream').value;
             
             // Validation
             if (!name) {
@@ -850,28 +368,21 @@
                 return;
             }
             
-            if (!agree) {
-                alert("Please accept the Legal Agreement first");
-                return;
-            }
-            
-            console.log("Free registration started");
-            
-            // Update charity counter
-            charityCount++;
-            document.getElementById('count').textContent = charityCount;
-            localStorage.setItem('charityCount', charityCount);
-            
-            // Save registration data
-            const registrationData = {
+            // Save student data
+            const studentData = { 
                 name: name,
                 email: email,
-                phone: document.getElementById('phone').value.trim() || 'Not provided',
-                type: 'free',
-                date: new Date().toISOString()
+                stream: stream, 
+                level: 1, 
+                date: new Date().toISOString(),
+                type: 'education'
             };
             
-            localStorage.setItem('muqaddasRegistration', JSON.stringify(registrationData));
+            localStorage.setItem('gyanStudent', JSON.stringify(studentData));
+            
+            // Visual feedback
+            document.getElementById('studentProgress').style.width = "45%";
+            document.getElementById('levelText').textContent = "Level 1 Complete - Enrollment Verified";
             
             // Show success message and download modal
             setTimeout(() => {
@@ -879,254 +390,7 @@
             }, 500);
         }
         
-        // Paid Registration handler (original from code 1)
-        function handlePaidRegister() {
-            const agree = document.getElementById('legalAgree').checked;
-            if (!agree) {
-                alert("Please accept the Legal Agreement first");
-                return;
-            }
-            
-            console.log("Paid registration started - opening full screen payment");
-            
-            // Show full screen payment container
-            document.getElementById('paymentContainer').style.display = 'block';
-            
-            // Generate QR code with multiple fallbacks
-            generateQRWithFallback();
-            
-            // Start payment simulation
-            startPaymentSimulation();
-        }
-        
-        // Generate QR code with multiple fallback methods (original from code 1)
-        function generateQRWithFallback() {
-            const upiId = '7638082406@ptsbi';
-            const amount = '15';
-            const name = 'Arif Ullah';
-            const note = 'Charity Registration';
-            
-            // Create UPI payment URL
-            const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}&cu=INR`;
-            
-            console.log("Generating QR code...");
-            
-            // Clear previous QR code
-            const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = '';
-            
-            // Try multiple QR code generation methods
-            tryAllQRApis(upiUrl, qrContainer);
-        }
-        
-        // Try multiple QR code APIs (original from code 1)
-        function tryAllQRApis(upiUrl, qrContainer) {
-            const qrSize = 200;
-            const apis = [
-                // Method 1: QuickChart (most reliable)
-                `https://quickchart.io/qr?text=${encodeURIComponent(upiUrl)}&size=${qrSize}`,
-                
-                // Method 2: GoQR.me
-                `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(upiUrl)}`,
-                
-                // Method 3: QRCode Monkey (no API key needed)
-                `https://qrcode.tec-it.com/API/QRCode?data=${encodeURIComponent(upiUrl)}&size=Medium`,
-                
-                // Method 4: QRickit
-                `https://qrickit.com/api/qr.php?d=${encodeURIComponent(upiUrl)}&qrsize=${qrSize}`
-            ];
-            
-            let currentApiIndex = 0;
-            
-            function tryNextApi() {
-                if (currentApiIndex >= apis.length) {
-                    console.log("All QR APIs failed, creating manual QR");
-                    createManualQR(qrContainer, upiUrl);
-                    return;
-                }
-                
-                const img = document.createElement('img');
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'contain';
-                img.alt = 'UPI Payment QR Code';
-                
-                // Set source to current API
-                img.src = apis[currentApiIndex] + '&t=' + Date.now(); // Cache bust
-                
-                img.onload = function() {
-                    console.log(`QR code loaded from API ${currentApiIndex + 1}`);
-                    qrContainer.innerHTML = '';
-                    qrContainer.appendChild(img);
-                };
-                
-                img.onerror = function() {
-                    console.log(`QR API ${currentApiIndex + 1} failed`);
-                    currentApiIndex++;
-                    setTimeout(tryNextApi, 100);
-                };
-                
-                qrContainer.appendChild(img);
-            }
-            
-            tryNextApi();
-        }
-        
-        // Create manual QR as fallback (original from code 1)
-        function createManualQR(qrContainer, upiUrl) {
-            qrContainer.innerHTML = `
-                <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 8px;">
-                    <div style="color: #000; font-size: 16px; font-weight: bold; margin-bottom: 10px; text-align: center;">
-                        UPI PAYMENT QR
-                    </div>
-                    
-                    <!-- Simple QR-like pattern -->
-                    <div style="width: 150px; height: 150px; background: #fff; border: 2px solid #000; position: relative; margin: 10px 0;">
-                        <!-- QR placeholder pattern -->
-                        <div style="position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; background: #000;"></div>
-                        <div style="position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; background: #000;"></div>
-                        <div style="position: absolute; bottom: 10px; left: 10px; width: 30px; height: 30px; background: #000;"></div>
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;">
-                            ₹15
-                        </div>
-                    </div>
-                    
-                    <div style="color: #0066cc; font-size: 12px; margin-top: 10px; text-align: center; word-break: break-all; padding: 8px; background: #f0f0f0; border-radius: 5px; border: 1px dashed #ccc; width: 90%;">
-                        ${upiUrl.split('?')[0].replace('upi://pay?pa=', '')}
-                    </div>
-                    
-                    <div style="color: #666; font-size: 11px; margin-top: 8px; text-align: center;">
-                        Scan with any UPI app
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Open specific UPI app (original from code 1)
-        function openSpecificApp(appName) {
-            const upiId = '7638082406@ptsbi';
-            const amount = '15';
-            const name = 'Arif Ullah';
-            const note = 'Charity Registration';
-            
-            const appLinks = {
-                'googlepay': `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`,
-                'phonepe': `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`,
-                'paytm': `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`,
-                'bhim': `bhim://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`,
-                'amazonpay': `amazonpay://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`
-            };
-            
-            // Show processing status
-            document.getElementById('paymentStatus').style.display = 'block';
-            document.getElementById('processingStatus').innerHTML = `Opening ${appName}...`;
-            
-            if (appLinks[appName]) {
-                window.location.href = appLinks[appName];
-                
-                // Fallback after delay
-                setTimeout(() => {
-                    if (document.hasFocus()) {
-                        document.getElementById('processingStatus').innerHTML = 
-                            `Please open ${appName} manually and send ₹15 to:<br><strong>${upiId}</strong>`;
-                        setTimeout(simulatePaymentSuccess, 3000);
-                    }
-                }, 1000);
-            }
-        }
-        
-        // Open UPI App (generic) (original from code 1)
-        function openUPIApp() {
-            const upiId = 'arif.ullah2@ybl';
-            const amount = '15';
-            const name = 'Muqaddas Network';
-            const note = 'Charity Registration';
-            
-            // Show processing status
-            document.getElementById('paymentStatus').style.display = 'block';
-            document.getElementById('processingStatus').innerHTML = 'Opening UPI app...';
-            
-            // Standard UPI URL that should work with all apps
-            const standardUPI = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}&cu=INR`;
-            
-            // Try to open standard UPI link
-            window.location.href = standardUPI;
-            
-            // Fallback: If still on page after 1 second, show manual instructions
-            setTimeout(() => {
-                if (document.hasFocus()) {
-                    document.getElementById('processingStatus').innerHTML = 
-                        '<div style="text-align: center;">' +
-                        '<p style="margin-bottom: 10px;">Open any UPI app and send:</p>' +
-                        '<div style="background: rgba(0,255,153,0.1); padding: 15px; border-radius: 10px; border: 1px solid #00ff99; margin: 10px 0;">' +
-                        '<p style="font-size: 20px; font-weight: bold; color: #00ff99; margin: 5px 0;">₹15</p>' +
-                        '<p style="font-size: 16px; margin: 5px 0;">To: <strong>' + upiId + '</strong></p>' +
-                        '<p style="font-size: 14px; color: #ccc; margin: 5px 0;">Note: Charity Registration</p>' +
-                        '</div>' +
-                        '<p style="font-size: 14px; margin-top: 10px;">Or click any app button above</p>' +
-                        '</div>';
-                    
-                    // Simulate payment after showing instructions
-                    setTimeout(simulatePaymentSuccess, 5000);
-                } else {
-                    // If UPI app opened, simulate payment success after delay
-                    setTimeout(simulatePaymentSuccess, 8000);
-                }
-            }, 1500);
-        }
-        
-        // Start payment simulation (original from code 1)
-        function startPaymentSimulation() {
-            // Auto-simulate payment after 30 seconds if user hasn't clicked anything
-            setTimeout(() => {
-                if (document.getElementById('paymentStatus').style.display === 'none') {
-                    simulatePaymentSuccess();
-                }
-            }, 30000);
-        }
-        
-        // Simulate payment success (original from code 1)
-        function simulatePaymentSuccess() {
-            document.getElementById('processingStatus').innerHTML = '<div style="color: #ffcc00;">Verifying payment... <div class="spinner" style="display: inline-block; width: 12px; height: 12px; border: 2px solid #ffcc00; border-radius: 50%; border-top-color: transparent; animation: spin 1s linear infinite;"></div></div>';
-            
-            setTimeout(() => {
-                document.getElementById('processingStatus').style.display = 'none';
-                document.getElementById('successStatus').style.display = 'block';
-                
-                // Update charity counter
-                charityCount++;
-                document.getElementById('count').textContent = charityCount;
-                localStorage.setItem('charityCount', charityCount);
-                
-                // Save paid registration data
-                const registrationData = {
-                    name: 'Paid Registration',
-                    type: 'paid',
-                    amount: 15,
-                    date: new Date().toISOString()
-                };
-                
-                localStorage.setItem('muqaddasRegistration', JSON.stringify(registrationData));
-                
-                // Show success and download modal after 3 seconds
-                setTimeout(() => {
-                    closePayment();
-                    showDownloadModal();
-                }, 3000);
-            }, 2000);
-        }
-        
-        // Add CSS for spinner animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Three.js Background - Original from Code 1
+        // Three.js Background
         function initThreeJS() {
             try {
                 const scene = new THREE.Scene();
@@ -1178,9 +442,6 @@
         
         // Close modal when clicking outside
         window.onclick = function(event) {
-            if (event.target.id === 'legalModal') {
-                hideModal('legalModal');
-            }
             if (event.target.id === 'downloadModal') {
                 closeDownloadModal();
             }
