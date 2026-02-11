@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gyan Sultanat 🎓 | Learning Platform</title>
+    <title>Gyan Sultanat 🎓 | AI & Digital Skills Academy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Load Three.js -->
@@ -11,10 +11,10 @@
     <style>
         body {
             margin: 0;
-            overflow: hidden;
+            overflow-x: hidden;
             background: #000;
             color: #ffffff;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
 
         canvas {
@@ -24,118 +24,349 @@
             z-index: -1;
         }
 
-        .registration-box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.85);
-            padding: 30px;
-            border-radius: 12px;
+        .header {
             text-align: center;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 0 25px rgba(0, 255, 153, 0.3);
-            z-index: 1;
-            border: 1px solid rgba(0, 255, 153, 0.2);
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0,40,20,0.9) 0%, rgba(0,0,0,0.9) 100%);
+            border-bottom: 2px solid #00ff99;
         }
 
-        button {
-            background: #00aa55;
-            color: #fff;
-            padding: 16px 28px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 18px;
-            width: 100%;
-            transition: 0.3s;
-            font-weight: bold;
+        .header h1 {
+            color: #00ff99;
+            font-size: 2.8rem;
             margin: 10px 0;
+            text-shadow: 0 0 15px rgba(0,255,153,0.5);
         }
 
-        button:hover {
-            background: #00ff99;
-            color: #000;
+        .header .tagline {
+            color: #ffcc00;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 10px 0 20px;
         }
 
-        /* Education/Learning Section */
-        .education-form {
-            text-align: left;
-            margin-top: 10px;
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .learning-card {
-            background: rgba(0, 255, 153, 0.05);
-            border: 1px solid rgba(0, 255, 153, 0.2);
-            border-radius: 8px;
-            padding: 12px;
+        .feature-card {
+            background: rgba(0, 30, 15, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(0, 255, 153, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 153, 0.2);
+            border-color: #00ff99;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
             margin-bottom: 15px;
         }
 
-        .level-bar {
-            width: 100%;
-            height: 10px;
-            background: #222;
-            border-radius: 5px;
+        .feature-title {
+            color: #00ff99;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .money-back-badge {
+            background: linear-gradient(135deg, #ffcc00, #ff9900);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
             margin: 10px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .registration-box {
+            background: rgba(0, 20, 10, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            margin: 40px auto;
+            box-shadow: 0 0 40px rgba(0, 255, 153, 0.3);
+            border: 2px solid rgba(0, 255, 153, 0.5);
+            position: relative;
             overflow: hidden;
         }
 
-        .level-progress {
-            width: 20%;
-            height: 100%;
-            background: linear-gradient(90deg, #00aa55, #00ff99);
-            box-shadow: 0 0 10px #00ff99;
-            transition: width 0.5s ease;
+        .registration-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #00ff99, #ffcc00, #00ff99);
+            animation: gradientMove 3s infinite linear;
         }
 
-        .guitar-royalty-box {
-            border: 1px dashed #ffcc00;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px;
-            background: rgba(255, 204, 0, 0.05);
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
-        .royalty-badge {
-            background: #ffcc00;
-            color: #000;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 11px;
+        .course-details {
+            background: rgba(0, 255, 153, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 4px solid #ffcc00;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .detail-label {
+            color: #ffcc00;
             font-weight: bold;
         }
 
-        /* Form styles */
+        .detail-value {
+            color: #00ff99;
+            font-weight: bold;
+        }
+
+        .price-tag {
+            font-size: 3.5rem;
+            color: #ffcc00;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 0 0 20px rgba(255,204,0,0.5);
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.5rem;
+            margin-left: 15px;
+        }
+
+        .enroll-btn {
+            background: linear-gradient(135deg, #00aa55, #00ff99);
+            color: #000;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .enroll-btn:hover {
+            background: linear-gradient(135deg, #00ff99, #00aa55);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,255,153,0.4);
+        }
+
+        .enroll-btn .icon {
+            font-size: 1.8rem;
+        }
+
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: left;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
             color: #00ff99;
-            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 255, 153, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 255, 153, 0.3);
             background: rgba(0, 0, 0, 0.5);
             color: white;
-            box-sizing: border-box;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
 
         .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: #00ff99;
-            box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
+            box-shadow: 0 0 15px rgba(0,255,153,0.3);
         }
 
-        /* Download Modal */
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .skill-badge {
+            background: rgba(0, 255, 153, 0.15);
+            border: 1px solid #00ff99;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #00ff99;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .testimonial {
+            background: rgba(0, 30, 15, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px;
+            border: 1px solid rgba(0, 255, 153, 0.3);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            color: #ffcc00;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .payment-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .payment-content {
+            background: linear-gradient(135deg, #001a00 0%, #000 100%);
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #00ff99;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #00ff99;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .qr-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            display: inline-block;
+        }
+
+        .upi-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .upi-btn {
+            background: rgba(0, 255, 153, 0.1);
+            border: 2px solid #00ff99;
+            color: #00ff99;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upi-btn:hover {
+            background: rgba(0, 255, 153, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .guarantee-banner {
+            background: linear-gradient(135deg, #ffcc00, #ff9900);
+            color: #000;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 30px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .countdown-timer {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff4444;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .timer-display {
+            font-size: 2.5rem;
+            color: #ff4444;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .timer-label {
+            color: #ffcc00;
+            font-size: 1.2rem;
+        }
+
         .download-modal {
             display: none;
             position: fixed;
@@ -144,305 +375,484 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            z-index: 2001;
+            z-index: 1001;
             padding: 20px;
             box-sizing: border-box;
         }
 
-        .download-content {
-            background: linear-gradient(135deg, #001a00 0%, #000 100%);
-            max-width: 500px;
-            margin: 100px auto;
-            padding: 40px;
-            border-radius: 15px;
-            border: 2px solid #00ff99;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(0, 255, 153, 0.3);
-        }
-
-        .download-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
-        .download-btn {
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            min-width: 120px;
-        }
-
-        .download-yes {
-            background: #00aa55;
-            color: white;
-            border: none;
-        }
-
-        .download-yes:hover {
-            background: #00ff99;
-            color: #000;
-        }
-
-        .download-no {
-            background: transparent;
-            color: #ff4444;
-            border: 2px solid #ff4444;
-        }
-
-        .download-no:hover {
-            background: rgba(255, 68, 68, 0.1);
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
             .registration-box {
-                padding: 20px;
+                padding: 25px;
+                margin: 20px;
             }
             
-            .download-buttons {
-                flex-direction: column;
-                align-items: center;
+            .price-tag {
+                font-size: 2.5rem;
             }
             
-            .download-btn {
-                width: 100%;
-                max-width: 200px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .download-content {
-                padding: 20px;
+            .header h1 {
+                font-size: 2rem;
             }
             
-            .download-btn {
-                padding: 12px 20px;
-                font-size: 16px;
+            .upi-options {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Registration Box -->
-    <div class="registration-box">
-        <h1 style="color:#00ff99; margin-bottom:10px;">Gyan Sultanat 🎓</h1>
-        <p><strong>Free Learning Platform</strong></p>
-        
-        <!-- Education Registration -->
-        <div id="educationRegistration" class="education-form">
-            <div class="learning-card">
-                <label style="font-size: 13px; color: #00ff99;">Student Progression</label>
-                <div class="level-bar"><div class="level-progress" id="studentProgress"></div></div>
-                <p id="levelText" style="font-size: 11px; margin: 0; color: #ccc;">Level 1: New Learner</p>
-            </div>
+    <!-- Three.js Background -->
+    <canvas id="bgCanvas"></canvas>
 
-            <div class="form-group">
-                <label for="fullName">Full Name *</label>
-                <input type="text" id="fullName" placeholder="Enter your full name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email Address *</label>
-                <input type="email" id="email" placeholder="Enter your email" required>
-            </div>
+    <!-- Header -->
+    <div class="header">
+        <h1>Gyan Sultanat 🎓</h1>
+        <div class="tagline">AI & Digital Skills Academy</div>
+        <div class="money-back-badge">100% MONEY-BACK GUARANTEE*</div>
+    </div>
 
-            <div class="form-group">
-                <label for="eduStream">Select Learning Stream</label>
-                <select id="eduStream">
-                    <option value="tech">Technology & Coding</option>
-                    <option value="music">Music & Guitar</option>
-                    <option value="business">Business Skills</option>
-                    <option value="personal">Personal Development</option>
-                </select>
+    <!-- Features Grid -->
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <div class="feature-title">AI Productivity Mastery</div>
+            <div class="feature-desc">
+                Learn to leverage AI tools for automation, data analysis, content creation, and workflow optimization. 
+                Master ChatGPT, Midjourney, and other cutting-edge AI technologies.
             </div>
-
-            <div class="guitar-royalty-box">
-                <p style="font-size: 13px; margin: 0; color: #ffcc00;">🎸 <strong>Learning Property</strong></p>
-                <p style="font-size: 11px; color: #aaa;">Your learning progress is secured as personal property.</p>
-                <span class="royalty-badge">PROGRESS TRACKED</span>
-            </div>
-
-            <button onclick="handleEduRegister()" style="background:#00ff99; color:#000;">Enroll for Free</button>
         </div>
-        
-        <div style="margin-top: 20px; font-size: 14px; color: #ccc;">
-            <p>100% Free • Instant Access</p>
+
+        <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <div class="feature-title">Digital Marketing Pro</div>
+            <div class="feature-desc">
+                Master SEO, Social Media Marketing, Google Ads, Email Marketing, and Analytics. 
+                Learn to create campaigns that convert and scale businesses online.
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">💼</div>
+            <div class="feature-title">Job Placement Support</div>
+            <div class="feature-desc">
+                1:1 Career Mentorship, Resume Building, Interview Preparation, and direct company referrals. 
+                Our network connects you with hiring partners.
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <div class="feature-title">6-Week Intensive Program</div>
+            <div class="feature-desc">
+                Live sessions, hands-on projects, real-world case studies, and personalized feedback. 
+                Transform from beginner to job-ready professional in 6 weeks.
+            </div>
         </div>
     </div>
 
-    <!-- Download APK Modal -->
+    <!-- Registration Section -->
+    <div class="registration-box">
+        <h2 style="color:#00ff99; margin-bottom:20px;">Enroll Now - Limited Seats!</h2>
+        
+        <div class="countdown-timer">
+            <div class="timer-label">Limited Time Offer Ends In:</div>
+            <div class="timer-display" id="countdown">23:59:59</div>
+            <div style="color:#ccc; font-size:0.9rem;">Next batch starts in 3 days</div>
+        </div>
+
+        <div class="course-details">
+            <div class="detail-item">
+                <span class="detail-label">Course Duration:</span>
+                <span class="detail-value">6 Weeks</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Live Sessions:</span>
+                <span class="detail-value">3x Weekly</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Projects:</span>
+                <span class="detail-value">5 Real-World</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Certificate:</span>
+                <span class="detail-value">Industry Recognized</span>
+            </div>
+        </div>
+
+        <div class="price-tag">
+            ₹999 <span class="original-price">₹9,999</span>
+        </div>
+
+        <div class="guarantee-banner">
+            ✅ 100% MONEY-BACK GUARANTEE: If you don't get a job within 3 months of course completion*
+        </div>
+
+        <div class="skills-list">
+            <span class="skill-badge">AI Tools</span>
+            <span class="skill-badge">ChatGPT</span>
+            <span class="skill-badge">SEO</span>
+            <span class="skill-badge">Google Ads</span>
+            <span class="skill-badge">Social Media</span>
+            <span class="skill-badge">Analytics</span>
+            <span class="skill-badge">Automation</span>
+            <span class="skill-badge">Freelancing</span>
+        </div>
+
+        <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" placeholder="Enter your WhatsApp number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="education">Highest Education</label>
+            <select id="education">
+                <option value="">Select your education</option>
+                <option value="12th">12th Pass</option>
+                <option value="graduate">Graduate</option>
+                <option value="postgraduate">Post Graduate</option>
+                <option value="diploma">Diploma</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <button class="enroll-btn" onclick="startEnrollment()">
+            <span class="icon">🚀</span>
+            ENROLL NOW - ₹999 ONLY
+        </button>
+
+        <p style="color:#ccc; font-size:0.9rem; margin-top:20px;">
+            *Terms apply. Money-back guarantee valid for students who complete all assignments and attend 90%+ sessions.
+        </p>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonial-slider">
+        <h3 style="text-align:center; color:#00ff99; margin-bottom:30px;">Success Stories</h3>
+        <div class="testimonial">
+            <div class="testimonial-text">
+                "The AI productivity module changed how I work. Landed a ₹50,000/month remote job within 2 weeks of course completion!"
+            </div>
+            <div class="testimonial-author">- Rohan Sharma, Digital Marketing Executive</div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="payment-container">
+        <div class="payment-content">
+            <button class="close-btn" onclick="closePayment()">×</button>
+            <h2 style="color:#00ff99;">Complete Payment - ₹999</h2>
+            <p style="color:#ffcc00;">Secure payment powered by Razorpay</p>
+            
+            <div class="qr-container">
+                <div id="qrcode" style="width:200px; height:200px; margin:0 auto;">
+                    <!-- QR will be generated here -->
+                </div>
+                <p style="color:#000; margin-top:15px; font-weight:bold;">Scan QR with any UPI App</p>
+            </div>
+
+            <div class="upi-options">
+                <button class="upi-btn" onclick="openUPI('googlepay')">Google Pay</button>
+                <button class="upi-btn" onclick="openUPI('phonepe')">PhonePe</button>
+                <button class="upi-btn" onclick="openUPI('paytm')">Paytm</button>
+                <button class="upi-btn" onclick="openUPI('bhim')">BHIM UPI</button>
+                <button class="upi-btn" onclick="openUPI('amazon')">Amazon Pay</button>
+                <button class="upi-btn" onclick="openUPI('other')">Other UPI App</button>
+            </div>
+
+            <div id="paymentStatus" style="display:none; margin-top:20px; padding:15px; background:rgba(0,255,153,0.1); border-radius:10px;">
+                <p style="color:#00ff99; font-weight:bold;">✅ Payment Successful!</p>
+                <p style="color:#ccc;">Redirecting to course portal...</p>
+            </div>
+
+            <div style="margin-top:30px; color:#ccc; font-size:0.9rem;">
+                <p>UPI ID: training@gyansultanat</p>
+                <p>After payment, you'll receive course access within 10 minutes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Modal -->
     <div id="downloadModal" class="download-modal">
-        <div class="download-content">
-            <h2 style="color:#00ff99;">Registration Successful! 🎉</h2>
-            <p style="color:#ffcc00; font-size: 20px; margin: 10px 0;">Welcome to Gyan Sultanat 🎓</p>
+        <div style="background:linear-gradient(135deg, #001a00 0%, #000 100%); max-width:500px; margin:100px auto; padding:40px; border-radius:20px; border:2px solid #00ff99; text-align:center;">
+            <h2 style="color:#00ff99;">🎉 Enrollment Successful!</h2>
+            <p style="color:#ffcc00; font-size:1.2rem;">Welcome to Gyan Sultanat Academy</p>
             
-            <div style="background: rgba(0,255,153,0.1); padding: 20px; border-radius: 10px; margin: 20px 0; border: 1px solid #00ff99;">
-                <p style="color:#00ff99; font-weight: bold; margin: 10px 0;">Download our learning app:</p>
-                <p style="color:#ccc; font-size: 14px; margin: 5px 0;">Get full access to courses and materials</p>
-                <p style="color:#ffcc00; font-size: 12px; margin-top: 10px;">APK Size: ~25 MB</p>
+            <div style="background:rgba(0,255,153,0.1); padding:25px; border-radius:15px; margin:30px 0; border:1px solid #00ff99;">
+                <p style="color:#00ff99; font-weight:bold; font-size:1.1rem;">Download Learning App</p>
+                <p style="color:#ccc; margin:10px 0;">Access course materials, live sessions, and assignments</p>
+                <p style="color:#ffcc00; font-size:0.9rem;">APK Size: ~35 MB | Updated: Feb 2024</p>
             </div>
-            
-            <p style="color:#fff; margin: 20px 0;">Would you like to download the Gyan Sultanat app now?</p>
-            
-            <div class="download-buttons">
-                <button class="download-btn download-yes" onclick="downloadAPK()">Yes, Download Now</button>
-                <button class="download-btn download-no" onclick="closeDownloadModal()">Maybe Later</button>
+
+            <div style="display:flex; gap:15px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
+                <button onclick="downloadAPK()" style="background:#00aa55; color:white; border:none; padding:18px 35px; border-radius:10px; font-size:1.1rem; font-weight:bold; cursor:pointer; min-width:200px;">
+                    📲 Download App Now
+                </button>
+                <button onclick="closeDownloadModal()" style="background:transparent; color:#ff4444; border:2px solid #ff4444; padding:18px 35px; border-radius:10px; font-size:1.1rem; cursor:pointer; min-width:200px;">
+                    Download Later
+                </button>
             </div>
-            
-            <p style="color:#999; font-size: 12px; margin-top: 20px;">
-                You can download it anytime from: <br>
-                <span style="color:#00ff99;">https://expo.dev/artifacts/eas/tryyhLkLD1dp3PQAWKwy8o.apk</span>
+
+            <p style="color:#999; font-size:0.9rem; margin-top:30px;">
+                Access your course dashboard at: <br>
+                <span style="color:#00ff99;">app.gyansultanat.in</span>
             </p>
         </div>
     </div>
 
     <script>
-        // Initialize Three.js background
-        window.onload = function() {
-            initThreeJS();
-        };
+        // Three.js Background
+        function initThreeJS() {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bgCanvas'), alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1500;
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for(let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 50;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.1,
+                color: 0x00ff99,
+                transparent: true,
+                opacity: 0.6
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            camera.position.z = 5;
+            
+            // Add floating cubes
+            const cubes = [];
+            for(let i = 0; i < 5; i++) {
+                const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: Math.random() * 0x00ff99,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.3
+                });
+                const cube = new THREE.Mesh(geometry, material);
+                cube.position.x = (Math.random() - 0.5) * 20;
+                cube.position.y = (Math.random() - 0.5) * 20;
+                cube.position.z = (Math.random() - 0.5) * 20;
+                scene.add(cube);
+                cubes.push(cube);
+            }
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                particlesMesh.rotation.y += 0.001;
+                particlesMesh.rotation.x += 0.0005;
+                
+                cubes.forEach((cube, i) => {
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+                    cube.position.y += Math.sin(Date.now() * 0.001 + i) * 0.01;
+                });
+                
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
         
-        // Show download modal
-        function showDownloadModal() {
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(23, 59, 59, 999);
+            
+            const diff = tomorrow - now;
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Enrollment Validation
+        function startEnrollment() {
+            const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            
+            if(!name || !email || !phone) {
+                alert("Please fill all required fields");
+                return;
+            }
+            
+            if(!validateEmail(email)) {
+                alert("Please enter a valid email address");
+                return;
+            }
+            
+            if(!validatePhone(phone)) {
+                alert("Please enter a valid 10-digit phone number");
+                return;
+            }
+            
+            // Save enrollment data
+            const enrollmentData = {
+                name: name,
+                email: email,
+                phone: phone,
+                education: document.getElementById('education').value,
+                timestamp: new Date().toISOString(),
+                course: "AI & Digital Skills - 6 Weeks"
+            };
+            
+            localStorage.setItem('gyanEnrollment', JSON.stringify(enrollmentData));
+            
+            // Show payment modal
+            document.getElementById('paymentModal').style.display = 'block';
+            generateQRCode();
+        }
+        
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        function validatePhone(phone) {
+            const re = /^[6-9]\d{9}$/;
+            return re.test(phone.replace(/\D/g, ''));
+        }
+        
+        function generateQRCode() {
+            const upiId = "training@gyansultanat";
+            const amount = "999";
+            const name = "Gyan Sultanat Course Fee";
+            const note = "6-Week AI & Digital Skills Course";
+            
+            const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}&cu=INR`;
+            
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            
+            // Generate QR using API
+            const qrImg = document.createElement('img');
+            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+            qrImg.alt = "UPI Payment QR Code";
+            qrImg.style.width = "200px";
+            qrImg.style.height = "200px";
+            qrContainer.appendChild(qrImg);
+        }
+        
+        function openUPI(app) {
+            const upiId = "training@gyansultanat";
+            const amount = "999";
+            const name = "Gyan Sultanat Course Fee";
+            const note = "6-Week AI & Digital Skills Course";
+            
+            const apps = {
+                googlepay: `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`,
+                phonepe: `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`,
+                paytm: `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`,
+                bhim: `bhim://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`,
+                amazon: `amazonpay://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}`,
+                other: `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(note)}&cu=INR`
+            };
+            
+            window.location.href = apps[app] || apps.other;
+            
+            // Simulate payment success after 5 seconds
+            setTimeout(() => {
+                document.getElementById('paymentStatus').style.display = 'block';
+                setTimeout(completePayment, 2000);
+            }, 5000);
+        }
+        
+        function completePayment() {
+            document.getElementById('paymentModal').style.display = 'none';
             document.getElementById('downloadModal').style.display = 'block';
+            
+            // Send enrollment confirmation (simulated)
+            const enrollment = JSON.parse(localStorage.getItem('gyanEnrollment'));
+            console.log("Enrollment completed:", enrollment);
         }
         
-        // Close download modal
-        function closeDownloadModal() {
-            document.getElementById('downloadModal').style.display = 'none';
-            alert("Thank you for registering! You can download the app anytime from the link provided.");
+        function closePayment() {
+            document.getElementById('paymentModal').style.display = 'none';
         }
         
-        // Download APK
         function downloadAPK() {
             const apkUrl = "https://expo.dev/artifacts/eas/tryyhLkLD1dp3PQAWKwy8o.apk";
             
-            // Create download link
-            const downloadLink = document.createElement('a');
-            downloadLink.href = apkUrl;
-            downloadLink.download = 'GyanSultanat.apk';
-            downloadLink.target = '_blank';
+            const link = document.createElement('a');
+            link.href = apkUrl;
+            link.download = 'GyanSultanat_App.apk';
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
             
-            // Trigger download
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-            
-            // Close modal after download starts
             setTimeout(() => {
                 document.getElementById('downloadModal').style.display = 'none';
-                alert("✅ Download started! Welcome to Gyan Sultanat 🎓");
+                alert("✅ App download started! Check your notifications.\n\n📧 Course access email will arrive within 10 minutes.\n\nWelcome to Gyan Sultanat! 🎓");
             }, 1000);
         }
         
-        // Education Registration handler
-        function handleEduRegister() {
-            const name = document.getElementById('fullName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const stream = document.getElementById('eduStream').value;
-            
-            // Validation
-            if (!name) {
-                alert("Please enter your full name");
-                document.getElementById('fullName').focus();
-                return;
-            }
-            
-            if (!email) {
-                alert("Please enter your email address");
-                document.getElementById('email').focus();
-                return;
-            }
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert("Please enter a valid email address");
-                document.getElementById('email').focus();
-                return;
-            }
-            
-            // Save student data
-            const studentData = { 
-                name: name,
-                email: email,
-                stream: stream, 
-                level: 1, 
-                date: new Date().toISOString(),
-                type: 'education'
-            };
-            
-            localStorage.setItem('gyanStudent', JSON.stringify(studentData));
-            
-            // Visual feedback
-            document.getElementById('studentProgress').style.width = "45%";
-            document.getElementById('levelText').textContent = "Level 1 Complete - Enrollment Verified";
-            
-            // Show success message and download modal
-            setTimeout(() => {
-                showDownloadModal();
-            }, 500);
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').style.display = 'none';
+            alert("✅ Enrollment complete!\n\nCheck your email for course access details.\n\nYou can download the app anytime from: app.gyansultanat.in");
         }
         
-        // Three.js Background
-        function initThreeJS() {
-            try {
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
-                
-                // Simple stars
-                const starsGeometry = new THREE.BufferGeometry();
-                const starsCount = 1000;
-                const positions = new Float32Array(starsCount * 3);
-                
-                for(let i = 0; i < starsCount * 3; i++) {
-                    positions[i] = (Math.random() - 0.5) * 1000;
-                }
-                
-                starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-                const starsMaterial = new THREE.PointsMaterial({ 
-                    color: 0x00ff99, 
-                    size: 0.3,
-                    transparent: true
-                });
-                
-                const stars = new THREE.Points(starsGeometry, starsMaterial);
-                scene.add(stars);
-                camera.position.z = 5;
-                
-                // Animation
-                function animate() {
-                    requestAnimationFrame(animate);
-                    stars.rotation.y += 0.0001;
-                    renderer.render(scene, camera);
-                }
-                
-                animate();
-                
-                // Handle resize
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-                
-            } catch (error) {
-                console.error("Three.js error:", error);
+        // Initialize
+        window.onload = function() {
+            initThreeJS();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // Auto-fill if returning user
+            const saved = localStorage.getItem('gyanEnrollment');
+            if(saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('fullName').value = data.name || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('phone').value = data.phone || '';
             }
-        }
+        };
         
-        // Close modal when clicking outside
+        // Close modals on outside click
         window.onclick = function(event) {
-            if (event.target.id === 'downloadModal') {
+            if(event.target.id === 'paymentModal') {
+                closePayment();
+            }
+            if(event.target.id === 'downloadModal') {
                 closeDownloadModal();
             }
         };
